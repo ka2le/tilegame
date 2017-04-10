@@ -1,12 +1,11 @@
 var role = "host";
 var playerNumber = 0;
 var players = [0,0];
-
 var playerTurn = 1;
 var numberOfPlayers = 1;
-var sun = new Image();
-var moon = new Image();
-var earth = new Image();
+var teamColors = ["red", "green", "yellow", "blue", "black"];
+
+
 var playerMovement = [0,0]
 var playerPos = [100,100]
 var playerHeigth= 30;
@@ -341,7 +340,7 @@ function findActive(){
 }
 function placeMeeple(position){
 	console.log("placeMeeple");
-	var teamColor = "red";
+	var teamColor = teamColors[playerTurn];
 	var tileToPlaceOn = findXY(activeSquare.valueX,activeSquare.valueY);
 	tileToPlaceOn.meeplePos = position;
 	tileToPlaceOn.meepleColor = teamColor;
