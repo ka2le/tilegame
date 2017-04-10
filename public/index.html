@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html>
-
-  <head>
-    <title>NodeJS Starter Application</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="stylesheets/style.css">
-  </head>
-
-  <body>
-    <table>
-      <tr>
-        <td style= "width:30%;">
-          <img class = "newappIcon" src="images/newapp-icon.png">
-        </td>
-        <td>
-          <h1 id="message">Hello World!</h1>
-          <p class='description'></p> Thanks for creating a <span class = "blue">NodeJS Starter Application</span>.
-        </td>
-      </tr>
-    </table>
-  </body>
-
+<head>
+<!-- <meta name="viewport" content="width=device-width" /> -->
+<meta name="description" content="New Project" />
+  <meta name="keywords" content="New Project" />
+  <meta charset="utf-8">
+<title>Carcasonne</title>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="css.css" rel="stylesheet" type="text/css" />
+ <script type="text/javascript" src="functions.js"></script>
+ <link href="favicon.ico" rel="icon" type="image/png" />
+</head>
+<body onload="onload()">
+<div id="canvasContainer">
+<canvas height="500px" width="500px" id="theCanvas"></canvas>
+<div id="theImages" style="display:block">
+	<!-- <img src="img/mario1.png" id="mario1"> -->
+	<canvas height="70px" width="70px" id="tempCanvas"></canvas>
+	
+</div>
+</div>
+</body>
 </html>

@@ -1,0 +1,20 @@
+body{
+	padding: 0px;
+	margin: 0px;
+}
+
+#canvasContainer{
+	position:absolute;
+	top: 20px;
+
+}
+#theCanvas{
+
+	height:800px;
+	width:1200px;
+	border: 1px solid;
+}
+#mario1{
+	transform: rotate(90deg);
+
+}

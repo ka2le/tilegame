@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- <meta name="viewport" content="width=device-width" /> -->
+<meta name="description" content="New Project" />
+  <meta name="keywords" content="New Project" />
+  <meta charset="utf-8">
+<title>Carcasonne</title>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<link href="player.css" rel="stylesheet" type="text/css" />
+ <link rel="stylesheet" href="hamburger.css">
+ 	 <script type="text/javascript" src="main.js"></script>
+	 <script type="text/javascript" src="player.js"></script>
+ <link href="favicon.ico" rel="icon" type="image/png" />
+</head>
+<body onload="onload()">
+
+		<div id="player" >
+			<div id="top">
+				<label id="theQuestion" class="playerText"> 
+					<label onclick="test()" id="playerNumber" value="0"></label>
+				<div id="optionButtons">
+				</div>
+				
+				<label id="sent"  >Answer Sent</label>
+				<label id="result" >Result</label>
+			</div>
+		</div>
+		<div id="sound" >
+			<div id="nav-icon3">
+			  <span></span>
+			  <span></span>
+			  <span></span>
+			  <span></span>
+			</div>
+		</div>
+		 <div id="menu">
+				<input type="button"  value="Test" onclick="test()"><br>
+					<input type="button" onclick="testTile('4')" value="new Tile"><br>
+					<input type="button" onclick="testPlaceMeeple()" value="place MEELPE" > <br>
+					<input type="button" onclick="testDone()" value="Test Done" > <br>'
+					<input type="button" onclick="testStart()" value="Start" > <br>
+					<input type="button" onclick="testCorrect()" value="Correct" > 
+			</div> 
+			<div id="inputContainer">
+
+				<table style="width:100%" id="tileTable">
+					<td>
+					  <tr>
+						<th><input type="image" src="img/rotateleft.png" class="inputButton rotateButton arrow" onclick="rotate('left')" ></th>
+						<th><input type="image" src="img/arrowup.png" class="inputButton arrow important" onclick="move('up')" ></th> 
+						<th><input type="image" src="img/rotateright.png" class="inputButton  rotateButton arrow" onclick="rotate('right')" ></th>
+					  </tr>
+					 </td> 
+					 <td >
+					  <tr>
+						<th><input type="image" src="img/arrowleft.png" class="inputButton important arrow" onclick="move('left')" ></th>
+						<th><input type="image" src="img/tile1.png" id="tileImage" class="tileImage" onclick="test()" ></th>
+						<th><input type="image" src="img/arrowright.png" class="inputButton arrow important" onclick="move('right')" ></th>
+					  </tr>
+					 </td>
+					 <td>
+					  <tr>
+						<th><input type="button" value="-" class="inputButton zoombutton arrow" onclick="zoom('in')" ></th>
+						<th><input type="image" src="img/arrowdown.png" class="inputButton arrow important" onclick="move('down')" ></th> 
+						<th><input type="button" value="+" class="inputButton zoombutton arrow" onclick="zoom('out')" ></th>
+					  </tr>
+					 </td> 
+					  <td>
+					  <tr>
+					  <th></th>
+						<th><input type="button" value="Place" class="inputButton placeButton arrow" onclick="place()" ></th>
+						<th></th>
+					  </tr>
+					 </td> 
+				</table>
+					<!--                                     TABLE FOR PLACING MEELPE -->
+				<table style="width:100%" id="meepleTable">
+				<td>
+				  <tr>
+					<th><input type="button" value="1" class="inputButton  arrow" onclick="placeMeeple('1')" ></th>
+					<th><input type="button" value="2" class="inputButton  arrow" onclick="placeMeeple('2')" ></th> 
+					<th><input type="button" value="3" class="inputButton  arrow" onclick="placeMeeple('3')" ></th>
+				  </tr>
+				 </td> 
+				
+				</table>
+				<div id="waitingDiv">Waiting for someone else</div>
+			</div> 
+<!-- 	<div class="shape2"></div>
+	<div class="shape4"></div> -->
+
+</body>
+</html>
