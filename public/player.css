@@ -27,11 +27,7 @@ body,html {
 	display:inline;
 	
 }
-#meepleTable input{
-margin-left:4vw;
-width: 20vw !important;
-padding:1vh;
-}
+
 #waitingDiv{
 	display:none;
 	font-size:4em;
@@ -95,7 +91,12 @@ height:7vh !important;
 	border-radius: 7px;
 	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 }
-
+#meepleTable input{
+margin-left:4vw;
+width: 35vw !important;
+padding:1vh;
+font-size:1.7em !important;
+}
 #top{
 	//border-bottom: 2px solid;
 	//border-color: rgb(186, 245, 255);
