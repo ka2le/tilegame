@@ -24,16 +24,22 @@ body,html {
 	text-align:center;
 }
 #meepleTable{
-	display:none;
+	display:inline;
+	
+}
+#meepleTable input{
+margin-left:4vw;
+width: 20vw !important;
+padding:1vh;
 }
 #waitingDiv{
 	display:none;
 	font-size:4em;
 	padding-top:10vh;
-	font-align:center;
+	//font-align:center;
 }
 #tileTable{
-	display:inline;
+	display:none;
 }
 #inputContainer table{
 	padding: 2vh;	

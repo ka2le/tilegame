@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		 <div id="menu">
-				<input type="button"  value="Test" onclick="test()"><br>
+					<input type="button" onclick="reconnect()" value="" > <br>
 					<input type="button" onclick="startGame('1')" value="Start 1 player game" > <br>
 					<input type="button" onclick="startGame('2')" value="Start 2 player game" > <br>
 					<input type="button" onclick="startGame('3')" value="Start 3 player game" > <br>
@@ -44,10 +44,7 @@
 					<input type="button" onclick="startGame('5')" value="Start 5 player game" > <br>
 					<input type="button" onclick="testTile('4')" value="new Tile"><br>
 					<input type="button" onclick="testPlaceMeeple()" value="place MEELPE" > <br>
-					<input type="button" onclick="testDone()" value="Test Done" > <br>'
-					<input type="button" onclick="testStart()" value="Start" > <br>
-					<input type="button" onclick="testStart()" value="Start" > <br>
-					<input type="button" onclick="testCorrect()" value="Correct" > 
+
 			</div> 
 			<div id="inputContainer">
 
@@ -68,9 +65,9 @@
 					 </td>
 					 <td>
 					  <tr>
-						<th><input type="button" value="-" class="inputButton zoombutton arrow" onclick="zoom('in')" ></th>
+						<th><input type="button" value="-" class="inputButton zoombutton arrow" onclick="zoom('out')" ></th>
 						<th><input type="image" src="img/arrowdown.png" class="inputButton arrow important" onclick="move('down')" ></th> 
-						<th><input type="button" value="+" class="inputButton zoombutton arrow" onclick="zoom('out')" ></th>
+						<th><input type="button" value="+" class="inputButton zoombutton arrow" onclick="zoom('in')" ></th>
 					  </tr>
 					 </td> 
 					  <td>

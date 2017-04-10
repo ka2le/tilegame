@@ -113,6 +113,9 @@ function answer(theAnswer){
 function move(direction){
 	send("move",direction);
 }
+function reconnect(){
+	send("reconnect");
+}
 
 function rotate(direction){
 	console.log(rotation);

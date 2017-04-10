@@ -475,6 +475,7 @@ if(activeSquare.rotate == 1){
 
 }
 //-------------------------------------------------Handle Player Turns------------------------------------------------------------------------
+var theTurn = "";
 function newRound(){
 	send("turnDone", "scoreHereLater", playerTurn);
 	playerTurn++;
@@ -482,10 +483,12 @@ function newRound(){
 		playerTurn=1;
 	}
 	drawNewTile();
+	theTurn = "newRound";
 	send("tile", activeSquare.type, playerTurn);
 }
 function waitForMeeple(){
 	console.log("waitForMeeple");
+	theTurn = "waitForMeeple";
 	send("placedTile", "", playerTurn);
 	activeSquare.disabled = true;
 }
@@ -528,6 +531,15 @@ function handleInput(data){
 	
 	var intent = data.intent;
 	console.log(intent);
+	if(intent=="reconnect"){
+		if(data.playerNumber == playerTurn){
+		if(theTurn=="newRound"){
+			send("tile", activeSquare.type, playerTurn);
+		}
+		if(theTurn=="newRound"){
+			send("placedTile", "", playerTurn);
+		}
+	} 
 	if(intent=="placeMeeple"){
 		var pos = data.value;
 		if(pos==0){
