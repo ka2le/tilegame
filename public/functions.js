@@ -502,9 +502,54 @@ function handleInput(data){
 		if(direction=="up"){
 			moveTile("up");
 		}
+		if(direction=="down"){
+			moveTile("down");
+		}
+		if(direction=="left"){
+			moveTile("left");
+		}
+		if(direction=="right"){
+			moveTile("right");
+		}
 	}
+	if(intent=="zoom"){
+		var value = data.value;
+		if(value=="in"){
+			zoomIn();
+		}if(value=="out"){
+			zoomOut();
+		}
+	}
+	if(intent=="place"){
+		placeTile();
+	}
+	if(intent=="rotate"){
+		var direction = data.value;
+		if(direction=="left"){
+			activeSquare.rotateLeft();
+		}
+		if(direction=="right"){
+			activeSquare.rotateRight();
+		}
+	}	
 	
 }
+function zoomIn(){
+	pixelHeight = (pixelHeight/zoomSpeed)*(zoomSpeed-1);
+	pixelWidth =  (pixelWidth/zoomSpeed)*(zoomSpeed-1);
+	stepLenght = (stepLenght/zoomSpeed)*(zoomSpeed-1);
+	theCanvas.height = pixelHeight;
+	theCanvas.width = pixelWidth;
+}
+function zoomOut(){
+	pixelHeight = (pixelHeight/zoomSpeed)*(zoomSpeed+1);
+	pixelWidth =  (pixelWidth/zoomSpeed)*(zoomSpeed+1);
+	stepLenght = (stepLenght/zoomSpeed)*(zoomSpeed+1);
+	theCanvas.height = pixelHeight;
+	theCanvas.width = pixelWidth;
+
+}
+
 $(function() {
 	   $(window).keydown(function(e) {
 		   var key = e.which;
@@ -571,25 +616,18 @@ $(function() {
 				//newSquare.activate();
 		  }
 		   if(key == 81){
-				var theActive = activeSquare;
-				theActive.rotateLeft();
+				//var theActive = activeSquare;
+				activeSquare.rotateLeft();
 		  }
 		  // +
 		   if(key == 107){
-				pixelHeight = (pixelHeight/zoomSpeed)*(zoomSpeed-1);
-				pixelWidth =  (pixelWidth/zoomSpeed)*(zoomSpeed-1);
-				stepLenght = (stepLenght/zoomSpeed)*(zoomSpeed-1);
-				theCanvas.height = pixelHeight;
-				theCanvas.width = pixelWidth;
+				zoomIn()
 				//newSquare.activate();
 		  }
 		  //-
 		   if(key == 109){
-				pixelHeight = (pixelHeight/zoomSpeed)*(zoomSpeed+1);
-				pixelWidth =  (pixelWidth/zoomSpeed)*(zoomSpeed+1);
-				stepLenght = (stepLenght/zoomSpeed)*(zoomSpeed+1);
-				theCanvas.height = pixelHeight;
-				theCanvas.width = pixelWidth;
+			zoomOut();
+			
 				//newSquare.activate();
 		  }
 		  //S
