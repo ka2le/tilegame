@@ -2,7 +2,8 @@ var role = "host";
 var playerNumber = 0;
 var players = [0,0];
 
-
+var playerTurn = 1;
+var numberOfPlayers = 1;
 var sun = new Image();
 var moon = new Image();
 var earth = new Image();
@@ -66,6 +67,7 @@ function continueOnload(){
 	console.log("continueOnload does nothing now on host.");
 	send("hostLoaded");
 }
+
 function rotateBorders(borders, theRotation){
 	var tempArray = [];
 	if(theRotation==1){
@@ -225,6 +227,7 @@ function cantPlaceTile(){
 	console.log("cantPlaceTile");
 }
 
+//---------------------------------------------The squares function----------------------------------------------------------------------------
 function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, color, colorBorder, colliedLevel){
 	this.name = name;
 	this.height = height;
@@ -367,6 +370,7 @@ function animate(thisObject){
 var updateFrequenzy = 500;
 var clockruns = 0;
 var extraUpdate = false;
+//-------------------------------------------------DRAW------------------------------------------------------------------------
 function draw() {
   var ctx = document.getElementById('theCanvas').getContext('2d');
   var time = new Date();
@@ -382,61 +386,61 @@ function draw() {
 	}
   for(var i=0; i<allObjects.length; i++){
 	var theObject = allObjects[i];
-	
-	if(theObject.hasImage){
-		//if(extraUpdate){
-			if(theObject.type>0){
-				redrawSquare(theObject);
+		
+		if(theObject.hasImage){
+			//if(extraUpdate){
+				if(theObject.type>0){
+					redrawSquare(theObject);
+				}
+			//}
+			
+			
+			ctx.drawImage(theObject.image, theObject.x+offsetX, theObject.y+offsetY, theObject.width, theObject.height);
+		}else{
+			ctx.fillStyle = theObject.color;
+			ctx.strokeStyle =  theObject.colorBorder;
+			ctx.fillRect(theObject.x+offsetX,theObject.y+offsetY,theObject.width, theObject.height);
+		}
+		if(theObject.meeplePos>0){
+			var meepleSquare = [];
+			meepleSquare.height = theObject.height/4;
+			meepleSquare.width = theObject.width/4;
+			ctx.fillStyle = theObject.meepleColor;
+			ctx.strokeStyle =  theObject.meepleColor;
+			if(theObject.meeplePos==1){
+				meepleSquare.x = theObject.x+offsetX+0;
+				meepleSquare.y = theObject.y+offsetY+(theObject.height/5*2);
 			}
-		//}
-		
-		
-		ctx.drawImage(theObject.image, theObject.x+offsetX, theObject.y+offsetY, theObject.width, theObject.height);
-	}else{
-		ctx.fillStyle = theObject.color;
-		ctx.strokeStyle =  theObject.colorBorder;
-		ctx.fillRect(theObject.x+offsetX,theObject.y+offsetY,theObject.width, theObject.height);
-	}
-	if(theObject.meeplePos>0){
-		var meepleSquare = [];
-		meepleSquare.height = theObject.height/4;
-		meepleSquare.width = theObject.width/4;
-		ctx.fillStyle = theObject.meepleColor;
-		ctx.strokeStyle =  theObject.meepleColor;
-		if(theObject.meeplePos==1){
-			meepleSquare.x = theObject.x+offsetX+0;
-			meepleSquare.y = theObject.y+offsetY+(theObject.height/5*2);
+			if(theObject.meeplePos==2){
+				meepleSquare.x = theObject.x+offsetX+(theObject.width/5*2);
+				meepleSquare.y = theObject.y+offsetY+0;
+			}
+			if(theObject.meeplePos==3){
+				meepleSquare.x = theObject.x+offsetX+(theObject.width/11*8);
+				meepleSquare.y = theObject.y+offsetY+(theObject.height/5*2);
+			}
+			if(theObject.meeplePos==4){
+				meepleSquare.x = theObject.x+offsetX+(theObject.width/5*2);
+				meepleSquare.y = theObject.y+offsetY+(theObject.height/11*8);
+			}
+			if(theObject.meeplePos==5){
+				meepleSquare.x = theObject.x+offsetX+(theObject.width/5*2);
+				meepleSquare.y = theObject.y+offsetY+(theObject.height/5*2);
+			}
+			ctx.clearRect(meepleSquare.x, meepleSquare.y, meepleSquare.width, meepleSquare.height); // clear canvas
+			ctx.fillRect(meepleSquare.x, meepleSquare.y, meepleSquare.width, meepleSquare.height);
 		}
-		if(theObject.meeplePos==2){
-			meepleSquare.x = theObject.x+offsetX+(theObject.width/5*2);
-			meepleSquare.y = theObject.y+offsetY+0;
-		}
-		if(theObject.meeplePos==3){
-			meepleSquare.x = theObject.x+offsetX+(theObject.width/11*8);
-			meepleSquare.y = theObject.y+offsetY+(theObject.height/5*2);
-		}
-		if(theObject.meeplePos==4){
-			meepleSquare.x = theObject.x+offsetX+(theObject.width/5*2);
-			meepleSquare.y = theObject.y+offsetY+(theObject.height/11*8);
-		}
-		if(theObject.meeplePos==5){
-			meepleSquare.x = theObject.x+offsetX+(theObject.width/5*2);
-			meepleSquare.y = theObject.y+offsetY+(theObject.height/5*2);
-		}
-		ctx.clearRect(meepleSquare.x, meepleSquare.y, meepleSquare.width, meepleSquare.height); // clear canvas
-		ctx.fillRect(meepleSquare.x, meepleSquare.y, meepleSquare.width, meepleSquare.height);
-	}
-  }
-  ctx.clearRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height); // clear canvas
-  ctx.fillStyle = borderColor;
-  ctx.fillRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height);
-  ctx.clearRect(theObject.x+offsetX+5, theObject.y+offsetY+5, theObject.width-10, theObject.height-10); // clear canvas
-  theObject = activeSquare;
-  updateTemp();
-  var tempCanvas = document.getElementById("tempCanvas");
-  ctx.drawImage(tempCanvas, theObject.x+offsetX+5, theObject.y+offsetY+5, theObject.width-10, theObject.height-10);
-  ctx.save();
-  window.requestAnimationFrame(draw);
+	 }
+	 ctx.clearRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height); // clear canvas
+	  ctx.fillStyle = borderColor;
+	  ctx.fillRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height);
+	  ctx.clearRect(theObject.x+offsetX+5, theObject.y+offsetY+5, theObject.width-10, theObject.height-10); // clear canvas
+	  theObject = activeSquare;
+	  updateTemp();
+	  var tempCanvas = document.getElementById("tempCanvas");
+	  ctx.drawImage(tempCanvas, theObject.x+offsetX+5, theObject.y+offsetY+5, theObject.width-10, theObject.height-10);
+	  ctx.save();
+	window.requestAnimationFrame(draw);
 }
 function drawRotateToTemp(src, rotate){
 	//console.log("draw rotate "+rotate);
@@ -473,24 +477,15 @@ if(activeSquare.rotate == 1){
 }
 
 }
-function moveTile(direction){
-	var theActive = activeSquare;
-	var newSquare;
-	if(direction=="up"){
-		newSquare = theSquares[theActive.valueX][theActive.valueY-1];
+//-------------------------------------------------Handle Player Turns------------------------------------------------------------------------
+function newRound(){
+	playerTurn++;
+	if(playerTurn>numberOfPlayers){
+		playerTurn=1;
 	}
-	if(direction=="down"){
-		newSquare = theSquares[theActive.valueX][theActive.valueY+1];
-	}
-	if(direction=="left"){
-		newSquare = theSquares[theActive.valueX-1][theActive.valueY];
-	}
-	if(direction=="right"){
-		newSquare = theSquares[theActive.valueX+1][theActive.valueY];
-	}
-	activeSquare.copyPos(newSquare);
-	newSquare.activate();
+	
 }
+//-------------------------------------------------Handle Input------------------------------------------------------------------------
 function handleInput(data){
 	console.log(" handleInput(data)");
 	console.log(data);
@@ -533,6 +528,30 @@ function handleInput(data){
 		}
 	}	
 	
+}
+
+//-------------------------------------------------Handle Input------------------------------------------------------------------------
+function moveTile(direction){
+	var theActive = activeSquare;
+	var newSquare;
+	if(direction=="up"){
+		newSquare = theSquares[theActive.valueX][theActive.valueY-1];
+	}
+	if(direction=="down"){
+		newSquare = theSquares[theActive.valueX][theActive.valueY+1];
+	}
+	if(direction=="left"){
+		newSquare = theSquares[theActive.valueX-1][theActive.valueY];
+	}
+	if(direction=="right"){
+		newSquare = theSquares[theActive.valueX+1][theActive.valueY];
+	}
+	activeSquare.copyPos(newSquare);
+	newSquare.activate();
+}
+function startPlayerTurn(player){
+	send("tile", activeSquare.type, player);
+
 }
 function zoomIn(){
 	pixelHeight = (pixelHeight/zoomSpeed)*(zoomSpeed-1);

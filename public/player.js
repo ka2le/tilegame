@@ -42,11 +42,8 @@ function iAmReady(){
 	send("iAmReady");
 }
 function waitForOthers(){
-	$(".square").each(function() {
-		$( this ).hide();
-	});	
-	document.getElementById("result").innerHTML = "Waiting for other players";
-	document.getElementById("result").style.display = "block";
+	showContent("waitingDiv");
+
 }
 
 function handleInput(data){
@@ -55,7 +52,6 @@ function handleInput(data){
 	
 	var intent = data.intent;
 	console.log(intent);
-
 
 	if(intent=="relog" && !started){
 		var whatToDo = data.value;
@@ -80,7 +76,7 @@ function handleInput(data){
 		document.getElementById("result").style.display = "block";
 	}
 	if(intent=="tile"){
-		if(data.playerNumber == playerNumber){
+		if(data.value2 == playerNumber){
 			var tileType= data.value;
 			document.getElementById("tileImage").src = "img/tile"+tileType+".png";
 			rotation = 0;
@@ -89,12 +85,12 @@ function handleInput(data){
 		}
 	}
 	if(intent=="placedTile"){
-		if(data.playerNumber == playerNumber){
+		if(data.value2 == playerNumber){
 			showContent("meepleTable");
 		}
 	}
 	if(intent=="turnDone"){
-		if(data.playerNumber == playerNumber){
+		if(data.value2 == playerNumber){
 			showContent("waitingDiv");
 		}
 	}
