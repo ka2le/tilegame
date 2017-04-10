@@ -24,12 +24,12 @@ body,html {
 	text-align:center;
 }
 #meepleTable{
-	display:inline;
+	display:none;
 	
 }
 
 #waitingDiv{
-	display:none;
+	display:inline;
 	font-size:4em;
 	padding-top:10vh;
 	//font-align:center;
@@ -81,7 +81,9 @@ height:7vh !important;
 	width: 40vw !important;;
 	height:14vh !important;
 }
-
+#player1Stuff{
+	display:none;
+}
 .bigbutton{
 	//border: 3px solid;
 	//border-color: rgb(172,157,222);

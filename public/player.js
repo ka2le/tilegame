@@ -15,6 +15,9 @@ function onload(){
 	console.log(playerNumber);
 	startConnection();
 	console.log(window.location.host);
+	if(playerNumber==1){
+		document.getElementById("player1Stuff").style.display = "inline";
+	}
 	$('#nav-icon1,#nav-icon2,#nav-icon3,#nav-icon4').click(function(){
 		$(this).toggleClass('open');
 		console.log("menu");
