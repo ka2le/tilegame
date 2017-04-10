@@ -1,3 +1,8 @@
+var role = "host";
+var playerNumber = 0;
+var players = [0,0];
+
+
 var sun = new Image();
 var moon = new Image();
 var earth = new Image();
@@ -28,6 +33,7 @@ var allTiles = [];
 var borderColor = "black";
 function onload(){
 	console.log("start");
+	startConnection();
 	theCanvas = document.getElementById("theCanvas");
 	theCanvas.height = pixelHeight;
 	theCanvas.width = pixelWidth;
@@ -55,6 +61,10 @@ function onload(){
 	//createCanvases();
 	var testArray = [1,2,3,4];
 	console.log(rotateBorders(testArray,2));
+}
+function continueOnload(){
+	console.log("continueOnload does nothing now on host.");
+	send("hostLoaded");
 }
 function rotateBorders(borders, theRotation){
 	var tempArray = [];
