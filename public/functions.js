@@ -186,7 +186,7 @@ function placeTile(){
 			}
 			if(completeMatch){
 				updateSquare.updateType(1);
-				drawNewTile();
+				waitForMeeple();
 			}else{
 				console.log("does not match");
 				cantPlaceTile();
@@ -239,6 +239,7 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
 	this.active = false;
 	this.hasImage = true;
 	this.type= type;
+	this.disabled = false;
 	this.rotate= 1;
 	this.meeplePos = 0;
 	this.meepleColor;
@@ -285,18 +286,14 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
 		}
 		if(type=="randomTile"){
 			var numberOfTiles =allTiles.length;
-			console.log( "numberOfTiles: "+numberOfTiles);
 			var randomNumber = Math.floor(Math.random() * numberOfTiles) + 1;
 			var tileType = allTiles[randomNumber-1].type;
 			this.setImg("img/tile"+tileType+".png");
 			activeSquareImg.src=("img/tile"+tileType+".png");
-			//console.log("loading img: "+"img/tile"+randomNumber+".png")
-			//console.log(this.image);
 			this.rotate=1;
 			rotation=1;
 			this.imageOriginal = this.image;
 			this.type= tileType;
-			//updateTemp();
 		}
     };
 	this.rotateRight = function () {
@@ -334,10 +331,7 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
     };
 	allObjects.push(this);
 }
-function drawNewTile(){
-	activeSquare.updateType("randomTile");
-	updateTemp();
-}
+
 function findActive(){
 	for(var i=0; i<allObjects.length; i++){
 		if(allObjects[i].active){
@@ -387,7 +381,7 @@ function draw() {
   for(var i=0; i<allObjects.length; i++){
 	var theObject = allObjects[i];
 		
-		if(theObject.hasImage){
+		if(theObject.hasImage && !theObject.disabled){
 			//if(extraUpdate){
 				if(theObject.type>0){
 					redrawSquare(theObject);
@@ -431,14 +425,17 @@ function draw() {
 			ctx.fillRect(meepleSquare.x, meepleSquare.y, meepleSquare.width, meepleSquare.height);
 		}
 	 }
-	 ctx.clearRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height); // clear canvas
-	  ctx.fillStyle = borderColor;
-	  ctx.fillRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height);
-	  ctx.clearRect(theObject.x+offsetX+5, theObject.y+offsetY+5, theObject.width-10, theObject.height-10); // clear canvas
-	  theObject = activeSquare;
-	  updateTemp();
-	  var tempCanvas = document.getElementById("tempCanvas");
-	  ctx.drawImage(tempCanvas, theObject.x+offsetX+5, theObject.y+offsetY+5, theObject.width-10, theObject.height-10);
+	 if(!activeSquare.disabled){
+			 ctx.clearRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height); // clear canvas
+		  ctx.fillStyle = borderColor;
+		  ctx.fillRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height);
+		  ctx.clearRect(theObject.x+offsetX+5, theObject.y+offsetY+5, theObject.width-10, theObject.height-10); // clear canvas
+		  theObject = activeSquare;
+		  updateTemp();
+		  var tempCanvas = document.getElementById("tempCanvas");
+		ctx.drawImage(tempCanvas, theObject.x+offsetX+5, theObject.y+offsetY+5, theObject.width-10, theObject.height-10);
+	 }
+
 	  ctx.save();
 	window.requestAnimationFrame(draw);
 }
@@ -485,6 +482,43 @@ function newRound(){
 	}
 	
 }
+function waitForMeeple(){
+	console.log("waitForMeeple");
+	send("placedTile", "", playerTurn);
+	activeSquare.disabled = true;
+}
+function drawNewTile(){
+	activeSquare.disabled = false;
+	activeSquare.updateType("randomTile");
+	updateTemp();
+}
+function restartGame(howManyPlayers){
+	numberOfPlayers=howManyPlayers;
+	playerTurn=1;
+	allObjects = [];
+	var margin = gridSize/4;
+	for(var x= 0; x<gridSize; x++){
+		var xpos= x*squareSize-(margin*squareSize);
+		var column = [];
+		for(var y= 0; y<gridSize; y++){
+			var ypos= y*squareSize-(margin*squareSize);
+			var square = new object("square", squareSize, squareSize,xpos,ypos,x,y, 'img/square.png', 0, "rgb(255,0,0)","rgb(0,0,0)",1);
+			//var square = new object("square", squareSize, squareSize,4,4,4,4, 'img/square.png', "solid", "rgb(255,0,0)","rgb(0,0,0)",1);
+			column.push(square);
+		}
+		theSquares.push(column);
+	}
+	allObjects[400].updateType(2);
+	var x = 13;
+	var y = 11;
+	xpos= x*squareSize-(margin*squareSize);
+	ypos= y*squareSize-(margin*squareSize);
+	activeSquare = new object("square", squareSize, squareSize,xpos,ypos,x,y, "img/tile1.png", 1, "rgb(255,0,0)","rgb(0,0,0)",1);
+	//updateTemp();
+	init();
+	createTheTiles();
+	
+}
 //-------------------------------------------------Handle Input------------------------------------------------------------------------
 function handleInput(data){
 	console.log(" handleInput(data)");
@@ -492,6 +526,19 @@ function handleInput(data){
 	
 	var intent = data.intent;
 	console.log(intent);
+	if(intent=="placeMeeple"){
+		var pos = data.value;
+		if(pos==0){
+			
+		}else{
+			placeMeeple(pos);	
+		}
+		drawNewTile();
+	}
+	if(intent=="startGame"){
+		howManyPlayers = data.value;
+		 restartGame(howManyPlayers);
+	}
 	if(intent=="move"){
 		var direction = data.value;
 		if(direction=="up"){
@@ -571,6 +618,7 @@ function zoomOut(){
 
 $(function() {
 	   $(window).keydown(function(e) {
+	   if(!activeSquare.disabled){
 		   var key = e.which;
 		console.log("key pressed: "+key); //do stuff with "key" here...
 			borderColor = "black";
@@ -664,10 +712,22 @@ $(function() {
 			allObjects[0].movement[0] = -stepLenght;
 			offsetX -= stepLenght;
 		  }
+		  }
 	   });
 	});
 
 
+function testNoMeeple(meeple){
+	var message = {
+      intent: "placeMeeple",
+	  value: meeple,
+	  value2: 1,
+	  sender: "host",
+	  playerNumber: 1
+    };
+	handleInput(message);
+}	
+	
 /* function createCanvases(){
 	var createSquare;
 	var container = document.getElementById("theImages");

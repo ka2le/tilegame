@@ -45,6 +45,9 @@ function waitForOthers(){
 	showContent("waitingDiv");
 
 }
+function startGame(numberOfPlayers){
+	send("startGame", numberOfPlayers);
+}
 
 function handleInput(data){
 	console.log(" handleInput(data)");
