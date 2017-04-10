@@ -476,11 +476,13 @@ if(activeSquare.rotate == 1){
 }
 //-------------------------------------------------Handle Player Turns------------------------------------------------------------------------
 function newRound(){
+	send("turnDone", "scoreHereLater", playerTurn);
 	playerTurn++;
 	if(playerTurn>numberOfPlayers){
 		playerTurn=1;
 	}
-	
+	drawNewTile();
+	send("tile", activeSquare.type, playerTurn);
 }
 function waitForMeeple(){
 	console.log("waitForMeeple");
@@ -517,7 +519,7 @@ function restartGame(howManyPlayers){
 	//updateTemp();
 	init();
 	createTheTiles();
-	
+	send("tile", activeSquare.type, playerTurn);
 }
 //-------------------------------------------------Handle Input------------------------------------------------------------------------
 function handleInput(data){
@@ -533,7 +535,7 @@ function handleInput(data){
 		}else{
 			placeMeeple(pos);	
 		}
-		drawNewTile();
+		newRound();
 	}
 	if(intent=="startGame"){
 		howManyPlayers = data.value;
