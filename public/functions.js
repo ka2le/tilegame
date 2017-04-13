@@ -225,6 +225,58 @@ function cantPlaceTile(){
 	borderColor="red";
 	console.log("cantPlaceTile");
 }
+//--------------------------------------------------Check score test--------------------------------------------------------------------------------------------------------------------------------------
+var removeByAttr = function(arr, attr, value){
+    var i = arr.length;
+    while(i--){
+       if( arr[i] 
+           && arr[i].hasOwnProperty(attr) 
+           && (arguments.length > 2 && arr[i][attr] === value ) ){ 
+
+           arr.splice(i,1);
+
+       }
+    }
+    return arr;
+}
+
+function checkScore(){
+	for(var i = 0; i<allObjects.length;i++){
+		var startSquare = allObjects[i];
+		var thePlacement = startSquare.meeplePos;
+	  	if(thePlacement>0){
+			var theBorders = getBorders(startSquare);
+			thePlacement--;
+			var currentType = theBorders[thePlacement];
+			console.log(currentType);
+			var foundEnd = false;
+			var checkSquares = [];
+			checkSquares.push(startSquare);
+			var theColor = startSquare.meepleColor; 
+			var score = 0;
+			while(!foundEnd){
+				for(var j = 0; j<checkSquares.length;j++){
+					var currentSquare = checkSquares[i];
+					removeByAttr(checkSquares, id, currentSquare.id);
+					if(currentSquare.meeplePos==1){
+						var leftSquare = findXY(currentSquare.valueX-1, currentSquare.valueY);
+						if(getBorders(leftSquare)[2]==getBorders(leftSquare)[0]){
+							console.log("mathcing to the left");
+							score++;
+							if(getBorders(leftSquare)[4]=="none"){
+								
+								
+							} 
+						}
+					}
+				}
+				foundEnd = true;
+			}
+			
+		}
+		
+	}
+}
 
 //---------------------------------------------The squares function----------------------------------------------------------------------------
 function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, color, colorBorder, colliedLevel){
@@ -233,6 +285,7 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
 	this.width = width;
 	this.x = pixelX;
 	this.y = pixelY;
+	this.id = allObjects.length;
 	this.valueX = valueX;
 	this.valueY = valueY;
 	this.active = false;
