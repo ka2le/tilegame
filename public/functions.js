@@ -20,7 +20,7 @@ var offsetY =10;
 var player1;
 var gridSize=30;
 var squareSize = 70;
-var zoomSpeed = 20;
+var zoomSpeed = 20; 
 var theCanvas;
 var pixelWidth = 1200;
 var pixelHeight = 800;
@@ -35,6 +35,9 @@ function onload(){
 	console.log("start");
 	startConnection();
 	theCanvas = document.getElementById("theCanvas");
+	pixelHeight = $('#theCanvas').height()/2;
+	pixelWidth = $('#theCanvas').width()/2;
+//console.log(pixelHeight);
 	theCanvas.height = pixelHeight;
 	theCanvas.width = pixelWidth;
 	var margin = gridSize/4;
@@ -363,11 +366,23 @@ function animate(thisObject){
 var updateFrequenzy = 500;
 var clockruns = 0;
 var extraUpdate = false;
-//-------------------------------------------------DRAW------------------------------------------------------------------------
+//-------------------------------------------------DRAW------------------------------------------------------------------------'
+
+			var meepleImg = new Image();
+			meepleImg.src= "img/transparent.png";
+			
+function createTransparentMeeple(){
+	//https://www.patrick-wied.at/blog/how-to-create-transparency-in-images-with-html5canvas
+	var ctx = document.getElementById('tempCanvas').getContext('2d');
+	ctx.setTransform(1, 0, 0, 1, 0, 0);
+	ctx.clearRect(0, 0, squareSize, squareSize); // clear canvas
+	ctx.drawImage(meepleImg, 0, 0, squareSize,squareSize);
+	ctx.save();
+}	
 function draw() {
   var ctx = document.getElementById('theCanvas').getContext('2d');
   var time = new Date();
-  ctx.globalCompositeOperation = 'destination-over';
+  ctx.globalCompositeOperation = 'source-over';
   ctx.clearRect(0, 0, pixelWidth, pixelHeight); // clear canvas
   //moveAll();
   //draw all objects
@@ -390,9 +405,9 @@ function draw() {
 			
 			ctx.drawImage(theObject.image, theObject.x+offsetX, theObject.y+offsetY, theObject.width, theObject.height);
 		}else{
-			ctx.fillStyle = theObject.color;
+		/* 	ctx.fillStyle = theObject.color;
 			ctx.strokeStyle =  theObject.colorBorder;
-			ctx.fillRect(theObject.x+offsetX,theObject.y+offsetY,theObject.width, theObject.height);
+			ctx.fillRect(theObject.x+offsetX,theObject.y+offsetY,theObject.width, theObject.height); */
 		}
 		if(theObject.meeplePos>0){
 			var meepleSquare = [];
@@ -421,10 +436,13 @@ function draw() {
 				meepleSquare.y = theObject.y+offsetY+(theObject.height/5*2);
 			}
 			ctx.clearRect(meepleSquare.x, meepleSquare.y, meepleSquare.width, meepleSquare.height); // clear canvas
-			ctx.fillRect(meepleSquare.x, meepleSquare.y, meepleSquare.width, meepleSquare.height);
+
+			//console.log("drawing");
+			ctx.drawImage(meepleImg,meepleSquare.x, meepleSquare.y, meepleSquare.width, meepleSquare.height);
 		}
 	 }
 	 if(!activeSquare.disabled){
+
 			 ctx.clearRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height); // clear canvas
 		  ctx.fillStyle = borderColor;
 		  ctx.fillRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height);
@@ -492,6 +510,7 @@ function waitForMeeple(){
 	activeSquare.disabled = true;
 }
 function drawNewTile(){
+	console.log(" drawNewTile()");
 	activeSquare.disabled = false;
 	activeSquare.updateType("randomTile");
 	updateTemp();
@@ -532,13 +551,14 @@ function handleInput(data){
 	console.log(intent);
 	if(intent=="reconnect"){
 		if(data.playerNumber == playerTurn){
-		if(theTurn=="newRound"){
-			send("tile", activeSquare.type, playerTurn);
+			if(theTurn=="newRound"){
+				send("tile", activeSquare.type, playerTurn);
+			}
+			if(theTurn=="newRound"){
+				send("placedTile", "", playerTurn);
+			}
 		}
-		if(theTurn=="newRound"){
-			send("placedTile", "", playerTurn);
-		}
-	} 
+	}	
 	if(intent=="placeMeeple"){
 		var pos = data.value;
 		if(pos==0){
@@ -631,9 +651,11 @@ function zoomOut(){
 
 $(function() {
 	   $(window).keydown(function(e) {
-	   if(!activeSquare.disabled){
-		   var key = e.which;
+		var key = e.which;
 		console.log("key pressed: "+key); //do stuff with "key" here...
+
+	   if(!activeSquare.disabled){
+		
 			borderColor = "black";
 		  if(key == 87 && !jumping){
 				offsetY += stepLenght;
@@ -669,26 +691,7 @@ $(function() {
 		   if(key == 82){
 				drawNewTile();
 		  }
-		   // number 1
-		   if(key == 49){
-				placeMeeple(1);
-		  }
-		   // number 2
-		   if(key == 50){
-				placeMeeple(2);
-		  }
-		   // number 3
-		   if(key == 51){
-				placeMeeple(3);
-		  }
-		   // number 4
-		   if(key == 52){
-				placeMeeple(4);
-		  }
-		   // number 5
-		   if(key == 53){
-				placeMeeple(5);
-		  }
+		
 		  //H for Help
 		   if(key == 72){
 		        help();
@@ -725,12 +728,38 @@ $(function() {
 			allObjects[0].movement[0] = -stepLenght;
 			offsetX -= stepLenght;
 		  }
+		  }else{
+				   	 // number 0
+		   if(key == 48){
+				testNoMeeple(0);
+		  }
+		   // number 1
+		   if(key == 49){
+				testNoMeeple(1);
+		  }
+		   // number 2
+		   if(key == 50){
+				testNoMeeple(2);
+		  }
+		   // number 3
+		   if(key == 51){
+				testNoMeeple(3);
+		  }
+		   // number 4
+		   if(key == 52){
+				testNoMeeple(4);
+		  }
+		   // number 5
+		   if(key == 53){
+				testNoMeeple(5);
+		  }
 		  }
 	   });
 	});
 
 
 function testNoMeeple(meeple){
+	console.log("testNoMeeple");
 	var message = {
       intent: "placeMeeple",
 	  value: meeple,
