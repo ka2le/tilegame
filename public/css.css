@@ -24,13 +24,16 @@ body{
 	z-index:20;
 	padding: 30px;
 	position:absolute;
-	
+	//display:none !important;
 	font-size:2em;
 	border-radius: 10px;
 }
 .playerInfo h1{
 	font-size:1em;
 
+}
+#player1, #player2, #player3, #player4{
+	display:none;
 }
 #player1{
 		top:100px;

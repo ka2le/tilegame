@@ -92,6 +92,14 @@ function handleInput(data){
 	}
 	if(intent=="placedTile"){
 		if(data.value2 == playerNumber){
+			var placedArray = data.value.split("_");
+			for(var i =0;i<placedArray.length;i++){
+				if(placedArray[i]==0){
+					$("#placeMeeple"+i).hide();
+				}else{
+					$("#placeMeeple"+i).show();
+				}		
+			}
 			showContent("meepleTable");
 		}
 	}
@@ -169,7 +177,17 @@ function testTile(type){
 function testPlaceMeeple(){
 	var message = {
       intent: "placedTile",
-	  value: "",
+	  value: "1_1_1_1_1",
+	  value2: 1,
+	  sender: "host",
+	  playerNumber: 1
+    };
+	handleInput(message);
+}
+function testPlaceMeeple2(){
+	var message = {
+      intent: "placedTile",
+	  value: "1_0_1_0_0",
 	  value2: 1,
 	  sender: "host",
 	  playerNumber: 1
