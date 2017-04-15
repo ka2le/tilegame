@@ -143,9 +143,11 @@ function zoom(value){
 	send("zoom",value);
 }
 function place(){
+	$("#tileTable").hide();
 	send("place");
 }
 function placeMeeple(value){
+	$("#meepleTable").hide();
 	send("placeMeeple", value);
 }
 //--------------------------------------------Test-------------------------------------

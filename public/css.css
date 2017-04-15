@@ -69,10 +69,19 @@ body{
 }
 
 
-
+#info{
+	position:absolute;
+	z-index:21;
+	width:100vw;
+	font-size:3em;
+	bottom:2vh;
+	text-align:center;
+	color:black;
+}
 
 #testButtons{
 	position:absolute;
 	z-index:10;
+	//display:none;
 
 }
