@@ -15,7 +15,8 @@ function onload(){
 	console.log(playerNumber);
 	startConnection();
 	console.log(window.location.host);
-	if(playerNumber==1){
+	playerNumber--;
+	if(playerNumber==0){
 		document.getElementById("player1Stuff").style.display = "inline";
 	}
 	$('#nav-icon1,#nav-icon2,#nav-icon3,#nav-icon4').click(function(){
@@ -170,7 +171,7 @@ function testTile(type){
 	var message = {
       intent: "tile",
 	  value: type,
-	  value2: 1,
+	  value2: playerNumber,
 	  sender: "host",
 	  playerNumber: 1
     };
