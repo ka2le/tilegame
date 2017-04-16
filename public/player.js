@@ -134,6 +134,10 @@ function move(direction){
 /* function reconnect(){
 	send("reconnect");
 } */
+function initReconnect(){
+	toggleMenu();
+	reconnect();
+}
 function handleReconnect(){
 	console.log("handleReconnect");
 	send("reconnect");
