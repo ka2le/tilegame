@@ -51,7 +51,7 @@ function onload(){
 		}
 		theSquares.push(column);
 	}
-	allObjects[400].updateType(2);
+	
 	var x = 13;
 	var y = 11;
 	xpos= x*squareSize-(margin*squareSize);
@@ -60,7 +60,8 @@ function onload(){
 	//updateTemp();
 	init();
 	createTheTiles();
-	//console.log(allTiles);
+	console.log(allTiles);
+	allObjects[400].updateType(2);
 	//createCanvases();
 	var testArray = [1,2,3,4];
 	//console.log(rotateBorders(testArray,2));
@@ -312,9 +313,17 @@ function cantPlaceTile(){
 	borderColor="red";
 //	console.log("cantPlaceTile");
 }
+function getTileIdByType(type){
+	for(var i= 0; i<allTiles.length; i++){
+		if(allTiles[i].type==type){
+			return i;
+		}
+	}
+}
 
 
 var currentTileId =0;
+
 //---------------------------------------------The squares function----------------------------------------------------------------------------
 function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, color, colorBorder, colliedLevel){
 	this.name = name;
@@ -371,6 +380,9 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
 			this.rotate = rotation;
 			this.borders = getBorders(this, this.rotate);
 			this.imageOriginal = this.image;
+			console.log("getTileIdByType(this.type)");
+			console.log(getTileIdByType(this.type));
+			currentTileId = getTileIdByType(this.type);
 			allTiles.splice(currentTileId,1);
 		}
 		if(type==2){
@@ -379,6 +391,7 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
 			this.rotate = rotation;
 			this.borders = ["road", "town", "road", "grass", "none"];
 			this.imageOriginal = this.image;
+			currentTileId = getTileByType(2).id;
 			allTiles.splice(currentTileId,1);
 		}
 		if(type=="randomTile"){
