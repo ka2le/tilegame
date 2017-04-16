@@ -11,8 +11,8 @@ function onload(){
 	  $(this).click();
 	  // This line still calls the standard click event, in case the user needs to interact with the element that is being clicked on, but still avoids zooming in cases of double clicking.
 	})
-	document.getElementById("sent").style.display = "none";
-	document.getElementById("result").style.display = "none";
+/* 	document.getElementById("sent").style.display = "none";
+	document.getElementById("result").style.display = "none"; */
 	var url = window.location.href;
 	$(".square").click(function() {
 		console.log(this);

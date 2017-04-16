@@ -157,7 +157,7 @@ if(testSomeTiles){
 		newTile = new tile(16, "town", "grass",  "town", "grass", "none",1); 
 	}
 	for(var i = 0; i<3; i++){
-		newTile = new tile(17, "town", "town",  "town", "road", "town",1); 
+		newTile = new tile(17, "town", "town",  "town", "road", "none",1); 
 	}
 	for(var i = 0; i<4; i++){
 		newTile = new tile(18, "town", "town",  "road", "road", "none",1); 
@@ -681,6 +681,7 @@ function findConnectedSquares(startSquare){
 	var terrain = currentSquare.borders[startPos];
 	var foundUnfinished = false;
 	var addedNewSquare;
+	var squaresWithRelatedMeeples = [];
 	connectedSquares.push(currentSquare);
 	var squaresToCheck =  [];
 	squaresToCheck.push(startSquare);
@@ -722,10 +723,11 @@ function findConnectedSquares(startSquare){
 			var center = currentSquare.borders[4];
 			if(center == terrain || center == "none"){
 				for(var i = 0; i<4; i++){
-					if(currentSquare.meeplePos==i){
-						isTaken =true;
-					}
 					if(currentSquare.borders[i]==terrain){
+						if(currentSquare.meeplePos==i){
+							isTaken =true;
+							squaresWithRelatedMeeples.push(currentSquare);
+						}
 						var connectedSquare = findSquareInRelationToSquare(currentSquare, i);
 						if(connectedSquare.tempChecked){
 						
@@ -745,13 +747,15 @@ function findConnectedSquares(startSquare){
 				}
 			}else{
 				var i = startPos;
-				if(currentSquare.meeplePos==i){
-					isTaken =true;
-				}
+				
 				//console.log("special center");
 				//console.log(currentSquare.id);
 			//	console.log(currentSquare.borders[i] +" <border at pos> "+i);
 				 if(currentSquare.borders[i]==terrain){
+					if(currentSquare.meeplePos==i){
+						isTaken =true;
+						squaresWithRelatedMeeples.push(currentSquare);
+					}
 					 var connectedSquare = findSquareInRelationToSquare(currentSquare, i);
 					if(connectedSquare.tempChecked){
 					
@@ -775,7 +779,7 @@ function findConnectedSquares(startSquare){
 		}
 	}
 	resetAllTempValues();
-	return [connectedSquares, foundUnfinished, isTaken];
+	return [connectedSquares, foundUnfinished, isTaken, squaresWithRelatedMeeples];
 }
 function exitToEntrance(exit){
 	if(exit==0){
@@ -833,7 +837,15 @@ function resetAllTempValues(){
 		allObjects[i].tempChecked = false;
 	}
 }
-
+function removeMeeplesFromSquares(theSquares){
+	console.log("removeMeeplesFromSquares");
+	console.log(theSquares);
+	for(var i = 0; i<theSquares.length; i++){
+		var whatPlayer = teamColors.indexOf(theSquares[i].meepleColor);
+		players[whatPlayer].meeplesLeft++;
+		theSquares[i].meeplePos =-1;
+	}
+}
 
 function countScore(){
 	var theConnections = [];
@@ -853,6 +865,7 @@ function countScore(){
 				thisConnection.triggeredColor = currentSquare.meepleColor;
 				thisConnection.meeplePlayer =  teamColors.indexOf(currentSquare.meepleColor);
 				thisConnection.startSquare = currentSquare;
+				thisConnection.squaresWithRelatedMeeples = resultArray[3];
 				thisConnection.meeplesByPlayers = [0,0,0,0,0];
 				thisConnection.meeplesByPlayers[thisConnection.meeplePlayer]++;
 				connectedSquares.sort(function (a, b) {
@@ -940,25 +953,22 @@ function countScore(){
 			var numberOfTiles = thisConnection.connectedSquares.length;
 			scoreMultiplier = scoreMultiplier*numberOfTiles;
 			//console.log("scoreMultiplier "+scoreMultiplier);
-			for(var player = 0; player<newMeeplesByPlayers.length; player++){
-				var nrOfMeeples = newMeeplesByPlayers[player];
-				if(nrOfMeeples>0){
-					nrOfMeeples=1;
-				}
-				if(thisConnection.isComplete){
-					players[player].score += nrOfMeeples*scoreMultiplier;
-					var theConnectedSquares = thisConnection.connectedSquares;
-					for(var squareNumber = 0; squareNumber<theConnectedSquares.length; squareNumber++){
-						var theSquare = theConnectedSquares[squareNumber];
-						if(theSquare.borders[theSquare.meeplePos]==thisConnection.type){
-							theSquare.meeplePos = -1;
-							var whatPlayer = teamColors.indexOf(theSquare.meepleColor);
-							//console.log("returning meeple to player "+ whatPlayer);
-							players[whatPlayer].meeplesLeft++;
-						}
+			if(thisConnection.isComplete){
+				removeMeeplesFromSquares(thisConnection.squaresWithRelatedMeeples);
+				for(var player = 0; player<newMeeplesByPlayers.length; player++){
+					var nrOfMeeples = newMeeplesByPlayers[player];
+					if(nrOfMeeples>0){
+						nrOfMeeples=1;
 					}
-					
-				}else{
+					players[player].score += nrOfMeeples*scoreMultiplier;
+				}
+				
+			}else{
+				for(var player = 0; player<newMeeplesByPlayers.length; player++){
+					var nrOfMeeples = newMeeplesByPlayers[player];
+					if(nrOfMeeples>0){
+						nrOfMeeples=1;
+					}
 					players[player].potentialScore += nrOfMeeples*scoreMultiplier;
 				}
 			} 
@@ -966,6 +976,17 @@ function countScore(){
 		
 	}
 }
+
+/* for(var squareNumber = 0; squareNumber<theConnectedSquares.length; squareNumber++){
+						var theSquare = theConnectedSquares[squareNumber];
+						if(theSquare.borders[theSquare.meeplePos]==thisConnection.type){
+							
+							//theSquare.meeplePos = -1;
+							//var whatPlayer = teamColors.indexOf(theSquare.meepleColor);
+							//console.log("returning meeple to player "+ whatPlayer);
+							//players[whatPlayer].meeplesLeft++;
+						}
+					} */
 function clearPlayerPotentialScore(){
 	for(var player = 0; player<players.length; player++){
 		players[player].potentialScore = 0;

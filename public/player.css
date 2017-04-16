@@ -234,11 +234,11 @@ label{
 	//background-color:green;
 }
 #sent{
-	//display:none;
+	display:none;
 	font-size: 0.7em;
 }
 #result{
-	//display:none;
+	display:none;
 	font-size: 0.6em;
 }
 h1 {
