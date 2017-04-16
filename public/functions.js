@@ -62,13 +62,13 @@ function onload(){
 	//updateTemp();
 	init();
 	createTheTiles();
-	console.log(allTiles);
+	//console.log(allTiles);
 	//createCanvases();
 	var testArray = [1,2,3,4];
 	//console.log(rotateBorders(testArray,2));
 	resetPlayers();
-	console.log("players");
-	console.log(players);
+	//console.log("players");
+	//console.log(players);
 	//createTransparentMeeple();
 }
 function continueOnload(){
@@ -212,58 +212,58 @@ function placeTile(){
 		var bottomTile=  findXY(activeSquare.valueX, activeSquare.valueY+1);
 		var completeMatch = true;
 		var thisBordes = getBorders(activeSquare);
-		console.log("this borders: "+thisBordes);
+	//	console.log("this borders: "+thisBordes);
 		if(leftTile.type>0 || rightTile.type>0 || topTile.type>0 || bottomTile.type>0){
 			if(leftTile.type>0){
 				var currentBorders = getBorders(leftTile);
 				
 				if(currentBorders[2]!=thisBordes[0]){
 					completeMatch=false;
-					console.log(currentBorders[2]+"<LEFT MISMATCH current>"+thisBordes[0]);
+				//	console.log(currentBorders[2]+"<LEFT MISMATCH current>"+thisBordes[0]);
 				}else{
-					console.log(currentBorders[2]+"<LEFT Match current>"+thisBordes[0]);
+				//	console.log(currentBorders[2]+"<LEFT Match current>"+thisBordes[0]);
 				}
 			}
 			if(rightTile.type>0){
 				var currentBorders = getBorders(rightTile);
 				if(currentBorders[0]!=thisBordes[2]){
 					completeMatch=false;
-					console.log(currentBorders[0]+"<RIGHT MISMATCH current>"+thisBordes[2]);
+				//	console.log(currentBorders[0]+"<RIGHT MISMATCH current>"+thisBordes[2]);
 				}else{
-					console.log(currentBorders[0]+"<RIGHT MATCH current>"+thisBordes[2]);
+				//	console.log(currentBorders[0]+"<RIGHT MATCH current>"+thisBordes[2]);
 				}
 			}
 			if(topTile.type>0){
 				var currentBorders = getBorders(topTile);
 				if(currentBorders[3]!=thisBordes[1]){
 					completeMatch=false;
-					console.log(currentBorders[3]+"<TOP MISMATCH current>"+thisBordes[1]);
+				//	console.log(currentBorders[3]+"<TOP MISMATCH current>"+thisBordes[1]);
 				}else{
-					console.log(currentBorders[3]+"<TOP MATCH current>"+thisBordes[1]);
+				//	console.log(currentBorders[3]+"<TOP MATCH current>"+thisBordes[1]);
 				}
 			}
 			if(bottomTile.type>0){
 				var currentBorders = getBorders(bottomTile);
 				if(currentBorders[1]!=thisBordes[3]){
 					completeMatch=false;
-					console.log(currentBorders[1]+"<Bottom  MISMATCH current>"+thisBordes[3]);
+				//	console.log(currentBorders[1]+"<Bottom  MISMATCH current>"+thisBordes[3]);
 				}else{
-					console.log(currentBorders[1]+"<Bottom  MAtCH current>"+thisBordes[3]);
+				//	console.log(currentBorders[1]+"<Bottom  MAtCH current>"+thisBordes[3]);
 				}
 			}
 			if(completeMatch){
 				updateSquare.updateType(1);
 				waitForMeeple();
 			}else{
-				console.log("does not match");
+			//	console.log("does not match");
 				cantPlaceTile();
 			}
 		}else{
-			console.log("must place next to other square");
+		//	console.log("must place next to other square");
 			cantPlaceTile();
 		}
 	}else{
-		console.log("square taken");
+	//	console.log("square taken");
 		cantPlaceTile();
 	}
 }
@@ -292,7 +292,7 @@ function help(){
 }
 function cantPlaceTile(){
 	borderColor="red";
-	console.log("cantPlaceTile");
+//	console.log("cantPlaceTile");
 }
 
 
@@ -377,7 +377,7 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
     };
 	this.rotateRight = function () {
 		rotation = (rotation%4)+1;
-		console.log("rotateRight"+ rotation);
+	//	console.log("rotateRight"+ rotation);
 		drawRotateToTemp(this.imageOriginal.src, rotation);
 		this.setImg(getTempSrc());
 		this.rotate = rotation;
@@ -386,7 +386,7 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
     };
 	this.rotateLeft = function () {
 		rotation = ((rotation+2)%4)+1;
-		console.log("rotateRight"+ rotation);
+	//	console.log("rotateRight"+ rotation);
 		drawRotateToTemp(this.imageOriginal.src, rotation);
 		this.setImg(getTempSrc());
 		this.rotate = rotation;
@@ -419,13 +419,13 @@ function findActive(){
 	}
 }
 function placeMeeple(position){
-	console.log("placeMeeple");
+//	console.log("placeMeeple");
 	var teamColor = teamColors[playerTurn];
 	var tileToPlaceOn = findXY(activeSquare.valueX,activeSquare.valueY);
 	tileToPlaceOn.meeplePos = position-1;
 	tileToPlaceOn.meepleColor = teamColor;
 	players[playerTurn].meeplesLeft--;
-	console.log(teamColor);
+	//console.log(teamColor);
 	tileToPlaceOn.meepleImg = theMeepleImgs[teamColor];
 	
 }
@@ -651,7 +651,7 @@ function sortById(array){
 					lowestId = array[i].id;
 					lowestObject = array[i];
 					lowestI = i;
-					console.log("lowestObject.id "+lowestObject.id);
+					//console.log("lowestObject.id "+lowestObject.id);
 				}
 				array.splice(lowestI,1);
 				sortedArray.push(lowestObject);
@@ -676,11 +676,26 @@ function findConnectedSquares(startSquare){
 	var squaresToCheck =  [];
 	squaresToCheck.push(startSquare);
 	var isTaken = false;
-	if(terrain == "curch"){
+	if(terrain == "church"){
 		foundAllSquares = true;
-		console.log("meeple is placed on curch");
+		foundUnfinished = true;
+		//console.log("meeple is placed on church");
+		for(var x=0;x<3;x++){
+			for(var y=0;y<3;y++){
+				var currentSquare = findXY((startSquare.valueX-1+x), (startSquare.valueY-1+y));
+				//console.log(x+"<x y>"+y);
+				if(currentSquare.id!=startSquare.id  && currentSquare.type>0){
+					
+					connectedSquares.push(currentSquare);
+				}
+			}
+		}
+		if(connectedSquares.length==9){
+			foundUnfinished = false;
+		}
+		//console.log("connectedSquares.length: "+connectedSquares.length);
 	}
-	console.log("LOOKING FOR SQARES BASED ON MEEPLE "+ startSquare.meepleColor);
+	//console.log("LOOKING FOR SQARES BASED ON MEEPLE "+ startSquare.meepleColor);
 	while(!foundAllSquares){
 		addedNewSquare = false;
 		var tempArray = [];
@@ -695,24 +710,18 @@ function findConnectedSquares(startSquare){
 			currentSquare.tempChecked = true;
 			squaresToCheck.splice(j,1);
 			startPos = currentSquare.tempMeeple;
-			console.log("startPos: "+startPos);
-			console.log("looking at square with id: "+ currentSquare.id);
 			var center = currentSquare.borders[4];
 			if(center == terrain || center == "none"){
 				for(var i = 0; i<4; i++){
 					if(currentSquare.meeplePos==i){
 						isTaken =true;
 					}
-					//console.log(currentSquare.borders[i]);
 					if(currentSquare.borders[i]==terrain){
 						var connectedSquare = findSquareInRelationToSquare(currentSquare, i);
 						if(connectedSquare.tempChecked){
 						
 						}else{
 							if(connectedSquare.type>0){
-								connectedSquare.tempMeeple = exitToEntrance(i);
-								console.log("new connection pos: "+exitToEntrance(i));
-								//console.log("indexOf "+connectedSquares.indexOf(connectedSquare));
 								if(connectedSquares.indexOf(connectedSquare)==-1){
 									connectedSquares.push(connectedSquare);
 								}		
@@ -730,9 +739,9 @@ function findConnectedSquares(startSquare){
 				if(currentSquare.meeplePos==i){
 					isTaken =true;
 				}
-				console.log("special center");
-				console.log(currentSquare.id);
-				console.log(currentSquare.borders[i] +" <border at pos> "+i);
+				//console.log("special center");
+				//console.log(currentSquare.id);
+			//	console.log(currentSquare.borders[i] +" <border at pos> "+i);
 				 if(currentSquare.borders[i]==terrain){
 					 var connectedSquare = findSquareInRelationToSquare(currentSquare, i);
 					if(connectedSquare.tempChecked){
@@ -800,9 +809,9 @@ function testScore(){
 	var connectedSquares =resultArray[0];
 	var isComplete = !resultArray[1];
 	var isTaken = resultArray[2];
-	console.log("This terrain is complete "+ isComplete);
-	console.log("This terrain is taken "+ isTaken);
-	console.log(connectedSquares);
+//	console.log("This terrain is complete "+ isComplete);
+//	console.log("This terrain is taken "+ isTaken);
+//	console.log(connectedSquares);
 	for(var j = 0; j<connectedSquares.length; j++){
 			console.log(connectedSquares[j].borders);
 			console.log(connectedSquares[j].id);
@@ -825,33 +834,35 @@ function countScore(){
 			if(currentSquare.meeplePos>-1){
 				var thisConnection = [];
 				currentSquare.tempMeeple = currentSquare.meeplePos;
-				console.log("trigger findConnectedSquares from square id: " +currentSquare.id);
+				//console.log("trigger findConnectedSquares from square id: " +currentSquare.id);
+				
 				var resultArray = findConnectedSquares(currentSquare);
 				var connectedSquares = resultArray[0];
 				thisConnection.isComplete = !resultArray[1];
 				thisConnection.connectedSquares = connectedSquares;
 				thisConnection.type= currentSquare.borders[currentSquare.meeplePos];
+				thisConnection.triggeredColor = currentSquare.meepleColor;
 				thisConnection.meeplePlayer =  teamColors.indexOf(currentSquare.meepleColor);
+				thisConnection.startSquare = currentSquare;
 				thisConnection.meeplesByPlayers = [0,0,0,0,0];
 				thisConnection.meeplesByPlayers[thisConnection.meeplePlayer]++;
-				console.log("square with id: "+ currentSquare.id +" with meeple for player number " + thisConnection.meeplePlayer+ " placed on "+ thisConnection.type );
 				connectedSquares.sort(function (a, b) {
 					return a.id - b.id;
 				});
 				connectedSquares.sort();// = sortById(connectedSquares);
-				 console.log("sorted connected squares");
+				 //console.log("sorted connected squares");
 				 var name = thisConnection.type+"_";
 				 for(var j = 0; j<connectedSquares.length; j++){
-					console.log(connectedSquares[j].id);
+					//console.log(connectedSquares[j].id);
 					name+= "_"+connectedSquares[j].id;
 				} 
 				thisConnection.name = name;
 				var connectionExist = false;
 				for(var j = 0; j<theConnections.length; j++){
-					console.log(theConnections[j].name);
+					//console.log(theConnections[j].name);
 					if(theConnections[j].name == thisConnection.name){
 						connectionExist=true;
-						console.log("connectionExist with name above" );
+						//console.log("connectionExist with name above" );
 						for(var x = 0; x<thisConnection.meeplesByPlayers.length; x++){
 							theConnections[j].meeplesByPlayers[x] += thisConnection.meeplesByPlayers[x];
 						}
@@ -860,18 +871,18 @@ function countScore(){
 				if(!connectionExist){
 					theConnections.push(thisConnection);
 				}
-				console.log(theConnections[theConnections.length-1].meeplesByPlayers);
+				//console.log(theConnections[theConnections.length-1].meeplesByPlayers);
 				
 			}
 		}
 	}
-	console.log("Calculating the score-----------------------------");
+//	console.log("Calculating the score-----------------------------");
 	clearPlayerPotentialScore();
 	
 	for(var i = 0; i<theConnections.length; i++){
 		var thisConnection = theConnections[i];
-		console.log(thisConnection.name);
-		console.log(thisConnection);
+	//	console.log(thisConnection.name);
+		//console.log(thisConnection);
 		var maxNumberOfMeeples = 0;
 		var newMeeplesByPlayers = [0,0,0,0,0];
 		for(var player = 0; player<thisConnection.meeplesByPlayers.length; player++){
@@ -884,8 +895,8 @@ function countScore(){
 			}
 			newMeeplesByPlayers[player] += nrOfMeeples;
 		}
-		console.log("who should get score");
-		console.log(newMeeplesByPlayers);
+		//console.log("who should get score");
+		//console.log(newMeeplesByPlayers);
 		var scoreMultiplier = 0;
 		if(thisConnection.type=="road"){
 			scoreMultiplier=1;
@@ -893,31 +904,57 @@ function countScore(){
 		if(thisConnection.type=="town"){
 			scoreMultiplier=townValue;
 		}
-		var numberOfTiles = thisConnection.connectedSquares.length;
-		scoreMultiplier = scoreMultiplier*numberOfTiles;
-		console.log("scoreMultiplier "+scoreMultiplier);
-		for(var player = 0; player<newMeeplesByPlayers.length; player++){
-			var nrOfMeeples = newMeeplesByPlayers[player];
-			if(nrOfMeeples>0){
-				nrOfMeeples=1;
-			}
+		if(thisConnection.type=="church"){
+		//	console.log("CALCULATING SCORE FOR CHURCH");
+			scoreMultiplier=1;
+			//console.log("theConnections.triggeredColor "+thisConnection.triggeredColor+" gives player nr :");
+			//console.log(teamColors);
+		//	console.log(thisConnection.triggeredColor +"<theConnections.triggeredColor  theConnections.meeplePlayer>"+thisConnection.meeplePlayer)
+			var playerI = thisConnection.meeplePlayer;//teamColors.indexOf(thisConnection.triggeredColor,1);
+			//console.log(playerI);
+			
+			var numberOfTiles = thisConnection.connectedSquares.length;
+			//console.log("numberOfTiles "+numberOfTiles);
+			var idFromName = thisConnection.name.split("_")[2];
+			//console.log("idFromName "+idFromName);
 			if(thisConnection.isComplete){
-				players[player].score += nrOfMeeples*scoreMultiplier;
-				var theConnectedSquares = thisConnection.connectedSquares;
-				for(var squareNumber = 0; squareNumber<theConnectedSquares.length; squareNumber++){
-					var theSquare = theConnectedSquares[squareNumber];
-					if(theSquare.borders[theSquare.meeplePos]==thisConnection.type){
-						theSquare.meeplePos = -1;
-						var whatPlayer = teamColors.indexOf(theSquare.meepleColor);
-						//console.log("returning meeple to player "+ whatPlayer);
-						players[whatPlayer].meeplesLeft++;
-					}
-				}
-				
+				//console.log("Church Completed")
+				players[playerI].score += numberOfTiles*scoreMultiplier;
+				players[playerI].meeplesLeft++;
+				thisConnection.startSquare.meeplePos = -1;				
 			}else{
-				players[player].potentialScore += nrOfMeeples*scoreMultiplier;
+				players[playerI].potentialScore += numberOfTiles*scoreMultiplier;
+				//console.log(allObjects[idFromName].id);
 			}
-		} 
+			//console.log(allObjects[idFromName]);
+		}else{
+			var numberOfTiles = thisConnection.connectedSquares.length;
+			scoreMultiplier = scoreMultiplier*numberOfTiles;
+			//console.log("scoreMultiplier "+scoreMultiplier);
+			for(var player = 0; player<newMeeplesByPlayers.length; player++){
+				var nrOfMeeples = newMeeplesByPlayers[player];
+				if(nrOfMeeples>0){
+					nrOfMeeples=1;
+				}
+				if(thisConnection.isComplete){
+					players[player].score += nrOfMeeples*scoreMultiplier;
+					var theConnectedSquares = thisConnection.connectedSquares;
+					for(var squareNumber = 0; squareNumber<theConnectedSquares.length; squareNumber++){
+						var theSquare = theConnectedSquares[squareNumber];
+						if(theSquare.borders[theSquare.meeplePos]==thisConnection.type){
+							theSquare.meeplePos = -1;
+							var whatPlayer = teamColors.indexOf(theSquare.meepleColor);
+							//console.log("returning meeple to player "+ whatPlayer);
+							players[whatPlayer].meeplesLeft++;
+						}
+					}
+					
+				}else{
+					players[player].potentialScore += nrOfMeeples*scoreMultiplier;
+				}
+			} 
+		}
+		
 	}
 }
 function clearPlayerPotentialScore(){
@@ -928,7 +965,7 @@ function clearPlayerPotentialScore(){
 
 var placeableSpotsString;
 function waitForMeeple(){
-	console.log("waitForMeeple");
+//	console.log("waitForMeeple");
 	theTurn = "waitForMeeple";
 	var startSquare = findXY(activeSquare.valueX, activeSquare.valueY);
 	var placeableSpots = [];
@@ -945,14 +982,14 @@ function waitForMeeple(){
 			}
 		}
 	}
-	if(startSquare[4]=="curch"){
+	if(startSquare[4]=="church"){
 		placeableSpots.push(1);
 	}else{
 		placeableSpots.push(0);
 	}
 	
 	placeableSpotsString = placeableSpots.join("_");
-	console.log("placeableSpots: "+ placeableSpots);
+	//console.log("placeableSpots: "+ placeableSpots);
 	if(players[playerTurn].meeplesLeft>0){
 		send("placedTile", placeableSpotsString, playerTurn);
 		activeSquare.disabled = true;
@@ -964,7 +1001,7 @@ function waitForMeeple(){
 }
 function drawNewTile(){
 	updatePlayerInfo();
-	console.log(" drawNewTile()");
+//	console.log(" drawNewTile()");
 	activeSquare.disabled = false;
 	activeSquare.updateType("randomTile");
 	updateTemp();
@@ -994,7 +1031,7 @@ function restartGame(howManyPlayers){
 	xpos= x*squareSize-(margin*squareSize);
 	ypos= y*squareSize-(margin*squareSize);
 	activeSquare = new object("square", squareSize, squareSize,xpos,ypos,x,y, "img/tile1.png", 1, "rgb(255,0,0)","rgb(0,0,0)",1);
-	console.log(activeSquare);
+//	console.log(activeSquare);
 	activeSquare.updateType("randomTile");
 	//updateTemp();
 	init();
@@ -1019,7 +1056,7 @@ function handleInput(data){
 	var intent = data.intent;
 	console.log(intent);
 	if(intent=="reconnect" || intent=="iAmReady"){
-		if(data.playerNumber == playerTurn){
+		if((data.playerNumber-1) == playerTurn){
 			if(theTurn=="newRound"){
 				send("tile", activeSquare.type, playerTurn);
 			}
@@ -1117,7 +1154,9 @@ function zoomOut(){
 	theCanvas.width = pixelWidth;
 
 }
-
+function clearConsole(){
+	console.clear();
+}
 $(function() {
 	   $(window).keydown(function(e) {
 		var key = e.which;
@@ -1153,7 +1192,7 @@ $(function() {
 		   if(key == 69){
 				var theActive = activeSquare;
 				theActive.rotateRight();
-				console.log("rotated to: " +theActive.rotate);
+			//	console.log("rotated to: " +theActive.rotate);
 				//newSquare.activate();
 		  }
 		     // R for reload
@@ -1228,7 +1267,7 @@ $(function() {
 
 
 function testNoMeeple(meeple){
-	console.log("testNoMeeple");
+//	console.log("testNoMeeple");
 	var message = {
       intent: "placeMeeple",
 	  value: meeple,

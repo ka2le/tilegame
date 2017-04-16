@@ -36,7 +36,7 @@ function onload(){
 function continueOnload(){
 	//$("#sent").hide();
 	console.log("continueOnload");
-	document.getElementById("playerNumber").innerHTML = ("Player: "+playerNumber);
+	document.getElementById("playerNumber").innerHTML = ("Player: "+(playerNumber+1));
 	iAmReady();
 	waitForOthers();
 
