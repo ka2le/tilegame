@@ -8,6 +8,10 @@ function startConnection(){
 		  console.log("Connected");
 		  continueOnload();
 	};
+	socket.onclose = function () {
+		  console.log("Socket Was Closed For Some Reason");
+		  reconnect();
+	};
 }
 function reconnect(){
 	socket.close();

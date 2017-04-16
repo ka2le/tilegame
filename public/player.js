@@ -135,6 +135,7 @@ function move(direction){
 } */
 function handleReconnect(){
 	console.log("handleReconnect");
+	send("reconnect");
 }
 
 function rotate(direction){

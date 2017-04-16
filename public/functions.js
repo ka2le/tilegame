@@ -1084,7 +1084,7 @@ function handleInput(data){
 	var intent = data.intent;
 	console.log(intent);
 	if(intent=="reconnect" || intent=="iAmReady"){
-		if((data.playerNumber-1) == playerTurn){
+		if((data.playerNumber) == playerTurn){
 			if(theTurn=="newRound"){
 				send("tile", activeSquare.type, playerTurn);
 			}
