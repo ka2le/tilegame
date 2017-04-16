@@ -991,7 +991,7 @@ function waitForMeeple(){
 			}
 		}
 	}
-	if(startSquare[4]=="church"){
+	if(startSquare.borders[4]=="church"){
 		placeableSpots.push(1);
 	}else{
 		placeableSpots.push(0);
@@ -1069,7 +1069,7 @@ function handleInput(data){
 			if(theTurn=="newRound"){
 				send("tile", activeSquare.type, playerTurn);
 			}
-			if(theTurn=="newRound"){
+			if(theTurn=="waitForMeeple"){
 				send("placedTile", placeableSpotsString, playerTurn);
 			}
 		}

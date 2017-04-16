@@ -82,11 +82,8 @@ function handleInput(data){
 		started = false;
 		document.getElementById("playerNumber").innerHTML = ("Player: "+playerNumber);
 		iAmReady();
-		$(".square").each(function() {
-			$( this ).hide();
-		});	
-		document.getElementById("result").innerHTML = "Reconnected to host. Waiting...";
-		document.getElementById("result").style.display = "block";
+		/* document.getElementById("result").innerHTML = "Reconnected to host. Waiting...";
+		document.getElementById("result").style.display = "block"; */
 	}
 	if(intent=="tile"){
 		if(data.value2 == playerNumber){
@@ -100,6 +97,7 @@ function handleInput(data){
 	if(intent=="placedTile"){
 		if(data.value2 == playerNumber){
 			$("#tileTable").hide();
+			document.getElementById("tileImage").src = "";
 			var placedArray = data.value.split("_");
 			for(var i =0;i<placedArray.length;i++){
 				if(placedArray[i]==0){
