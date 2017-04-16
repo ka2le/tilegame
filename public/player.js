@@ -81,7 +81,7 @@ function handleInput(data){
 	}
 	if(intent=="hostLoaded" && playerNumber != null){
 		started = false;
-		document.getElementById("playerNumber").innerHTML = ("Player: "+playerNumber);
+		document.getElementById("playerNumber").innerHTML = ("Player: "+(playerNumber+1));
 		iAmReady();
 		/* document.getElementById("result").innerHTML = "Reconnected to host. Waiting...";
 		document.getElementById("result").style.display = "block"; */
