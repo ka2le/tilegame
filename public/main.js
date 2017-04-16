@@ -10,11 +10,13 @@ function startConnection(){
 	};
 }
 function reconnect(){
+	socket.close();
 	socket = new WebSocket( 'wss://' + window.location.host );  
 	socket.addEventListener( 'message', doSocketMessage );
 	socket.onopen = function () {
 		  console.log("Re-Connected");
 		 // continueOnload();
+		 handleReconnect();
 	};
 }
 function send(intent, value, value2){

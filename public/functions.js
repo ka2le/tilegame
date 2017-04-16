@@ -1069,6 +1069,14 @@ function updateGameInfo(text){
 	document.getElementById("info").innerHTML = text;
 }
 //-------------------------------------------------Handle Input------------------------------------------------------------------------
+function handleReconnect(){
+	if(theTurn=="newRound"){
+		send("tile", activeSquare.type, playerTurn);
+	}
+	if(theTurn=="waitForMeeple"){
+		send("placedTile", placeableSpotsString, playerTurn);
+	}
+}
 function handleInput(data){
 	console.log(" handleInput(data)");
 	console.log(data);

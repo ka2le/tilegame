@@ -130,8 +130,11 @@ function answer(theAnswer){
 function move(direction){
 	send("move",direction);
 }
-function reconnect(){
+/* function reconnect(){
 	send("reconnect");
+} */
+function handleReconnect(){
+	console.log("handleReconnect");
 }
 
 function rotate(direction){
