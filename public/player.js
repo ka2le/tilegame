@@ -56,6 +56,7 @@ function waitForOthers(){
 
 }
 function startGame(numberOfPlayers){
+	toggleMenu();
 	send("startGame", numberOfPlayers);
 }
 

@@ -2,21 +2,24 @@ var socket = null;
 
 function startConnection(){
 	// WebSocket
-	socket = new WebSocket( 'wss://' + window.location.host );  
-	socket.addEventListener( 'message', doSocketMessage );
-	socket.onopen = function () {
-		  console.log("Connected");
-		  continueOnload();
-	};
-	socket.onclose = function () {
-		  console.log("Socket Was Closed For Some Reason");
-		  reconnect(2);
-	};
-}
-function reconnect(number){
-	if(number!=2){
-		socket.close();
+	if(window.location.host=="localhost:4330"){
+		console.log("WebSocket is not used on localhost");
+	}else{
+		socket = new WebSocket( 'wss://' + window.location.host );  
+		socket.addEventListener( 'message', doSocketMessage );
+		console.log(socket);
+		socket.onopen = function () {
+			  console.log("Connected");
+			  continueOnload();
+		};
+		setInterval(function(){ 
+			if(socket.readyState == 3){
+				reconnect();
+			}
+		}, 1000);
 	}
+}
+function reconnect(){
 	socket = new WebSocket( 'wss://' + window.location.host );  
 	socket.addEventListener( 'message', doSocketMessage );
 	socket.onopen = function () {
@@ -26,16 +29,18 @@ function reconnect(number){
 	};
 }
 function send(intent, value, value2){
-	
-	var message = {
-      intent: intent,
-	  value: value,
-	  value2: value2,
-	  sender: role,
-	  playerNumber: playerNumber
-    };
-	socket.send( JSON.stringify( message ) );	 
-
+	if(window.location.host=="localhost:4330"){
+		console.log("sending diabled beacause Localhost. Message:"+ intent+" value: "+value);
+	}else{
+		var message = {
+		intent: intent,
+		  value: value,
+		  value2: value2,
+		  sender: role,
+		  playerNumber: playerNumber
+		};
+		socket.send( JSON.stringify( message ) );	 
+	}
 }
 
 function doSocketMessage( message ) {  

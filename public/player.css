@@ -300,6 +300,7 @@ z-index:300;
 display:none;
 //font-size:em;
 padding-top:2vh;
+padding-bottom:4vh;
 	-webkit-box-shadow: -3px 10px 71px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: -3px 10px 71px 0px rgba(0,0,0,0.75);
 box-shadow: -3px 10px 71px 0px rgba(0,0,0,0.75);
