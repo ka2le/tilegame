@@ -11,8 +11,6 @@ function onload(){
 	  $(this).click();
 	  // This line still calls the standard click event, in case the user needs to interact with the element that is being clicked on, but still avoids zooming in cases of double clicking.
 	})
-/* 	document.getElementById("sent").style.display = "none";
-	document.getElementById("result").style.display = "none"; */
 	var url = window.location.href;
 	$(".square").click(function() {
 		console.log(this);
@@ -22,18 +20,12 @@ function onload(){
 	startConnection();
 	console.log(window.location.host);
 	playerNumber--;
+	document.getElementById("playerNumber").innerHTML = ("Player: "+(playerNumber+1));
 	if(playerNumber==0){
 		document.getElementById("player1Stuff").style.display = "inline";
 	}
 	$('#nav-icon1,#nav-icon2,#nav-icon3,#nav-icon4').click(function(){
-		$("#nav-icon3").toggleClass('open');
-		console.log("menu");
-		if($("#menu").is(":visible")){
-			$("#menu").slideUp(200);
-		}else{
-			$("#menu").slideDown(200);
-		}
-		
+		toggleMenu();
 	});
 	if(window.location.host=="localhost:4330"){
 		continueOnload();
@@ -42,7 +34,7 @@ function onload(){
 function continueOnload(){
 	//$("#sent").hide();
 	console.log("continueOnload");
-	document.getElementById("playerNumber").innerHTML = ("Player: "+(playerNumber+1));
+	
 	iAmReady();
 	waitForOthers();
 
@@ -66,19 +58,6 @@ function handleInput(data){
 	
 	var intent = data.intent;
 	console.log(intent);
-
-	if(intent=="relog" && !started){
-		var whatToDo = data.value;
-		if(whatToDo=="done"){
-			document.getElementById("result").innerHTML = "Reconnected";
-			document.getElementById("result").style.display = "block";
-		}
-		if(whatToDo=="newQ"){
-			console.log("relog + newQ")
-			showOptions();
-		}
-		started = true;
-	}
 	if(intent=="hostLoaded" && playerNumber != null){
 		started = false;
 		document.getElementById("playerNumber").innerHTML = ("Player: "+(playerNumber+1));
