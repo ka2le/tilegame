@@ -46,37 +46,38 @@
 					<input type="button" onclick="testTile('4')" value="new Tile"><br>
 					<input type="button" onclick="testPlaceMeeple()" value="place MEELPE" > <br>
 					<input type="button" onclick="testPlaceMeeple2()" value="show meeple some hidden" > <br>
+					<input type="button" onclick="testDone()" value="Test Done" > <br>
 					</div>
 
 			</div> 
-			<div id="inputContainer">
+			<div id="inputContainer" >
 
 				<table style="width:100%" id="tileTable">
 					<td>
 					  <tr>
-						<th><input type="image" src="img/rotateleft.png" class="inputButton rotateButton arrow" onclick="rotate('left')" ></th>
-						<th><input type="image" src="img/arrowup.png" class="inputButton arrow important" onclick="move('up')" ></th> 
-						<th><input type="image" src="img/rotateright.png" class="inputButton  rotateButton arrow" onclick="rotate('right')" ></th>
+						<th><input type="image" src="img/rotateleft.png" class="inputButton no-zoom rotateButton arrow" onclick="rotate('left')" ></th>
+						<th><input type="image" src="img/arrowup.png" class="inputButton arrow no-zoom important" onclick="move('up')" ></th> 
+						<th><input type="image" src="img/rotateright.png" class="inputButton no-zoom  rotateButton arrow" onclick="rotate('right')" ></th>
 					  </tr>
 					 </td> 
 					 <td >
 					  <tr>
-						<th><input type="image" src="img/arrowleft.png" class="inputButton important arrow" onclick="move('left')" ></th>
-						<th><input type="image" src="img/tile1.png" id="tileImage" class="tileImage" onclick="test()" ></th>
-						<th><input type="image" src="img/arrowright.png" class="inputButton arrow important" onclick="move('right')" ></th>
+						<th><input type="image" src="img/arrowleft.png" class="inputButton no-zoom important arrow" onclick="move('left')" ></th>
+						<th><input type="image" src="img/tile1.png" id="tileImage" class="tileImage no-zoom" onclick="test()" ></th>
+						<th><input type="image" src="img/arrowright.png" class="inputButton arrow important no-zoom" onclick="move('right')" ></th>
 					  </tr>
 					 </td>
 					 <td>
 					  <tr>
-						<th><input type="button" value="-" class="inputButton zoombutton arrow" onclick="zoom('out')" ></th>
-						<th><input type="image" src="img/arrowdown.png" class="inputButton arrow important" onclick="move('down')" ></th> 
-						<th><input type="button" value="+" class="inputButton zoombutton arrow" onclick="zoom('in')" ></th>
+						<th><input type="button" value="-" class="inputButton zoombutton arrow no-zoom" onclick="zoom('out')" ></th>
+						<th><input type="image" src="img/arrowdown.png" class="inputButton arrow important no-zoom" onclick="move('down')" ></th> 
+						<th><input type="button" value="+" class="inputButton zoombutton arrow no-zoom" onclick="zoom('in')" ></th>
 					  </tr>
 					 </td> 
 					  <td>
 					  <tr>
 					  <th></th>
-						<th><input type="button" value="Place" class="inputButton placeButton arrow" onclick="place()" ></th>
+						<th><input type="button" value="Place" class="inputButton placeButton arrow no-zoom" onclick="place()" ></th>
 						<th></th>
 					  </tr>
 					 </td> 

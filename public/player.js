@@ -5,6 +5,12 @@ var joinNumber;
 var started = false;
 var rotation = 0;
 function onload(){
+	$('.no-zoom').bind('touchend', function(e) {
+	  e.preventDefault();
+	  // Add your code here. 
+	  $(this).click();
+	  // This line still calls the standard click event, in case the user needs to interact with the element that is being clicked on, but still avoids zooming in cases of double clicking.
+	})
 	document.getElementById("sent").style.display = "none";
 	document.getElementById("result").style.display = "none";
 	var url = window.location.href;
@@ -20,7 +26,7 @@ function onload(){
 		document.getElementById("player1Stuff").style.display = "inline";
 	}
 	$('#nav-icon1,#nav-icon2,#nav-icon3,#nav-icon4').click(function(){
-		$(this).toggleClass('open');
+		$("#nav-icon3").toggleClass('open');
 		console.log("menu");
 		if($("#menu").is(":visible")){
 			$("#menu").slideUp(200);
@@ -93,6 +99,7 @@ function handleInput(data){
 	}
 	if(intent=="placedTile"){
 		if(data.value2 == playerNumber){
+			$("#tileTable").hide();
 			var placedArray = data.value.split("_");
 			for(var i =0;i<placedArray.length;i++){
 				if(placedArray[i]==0){
@@ -144,12 +151,22 @@ function zoom(value){
 	send("zoom",value);
 }
 function place(){
-	$("#tileTable").hide();
+	//$("#tileTable").hide();
 	send("place");
 }
 function placeMeeple(value){
-	$("#meepleTable").hide();
+	//$("#meepleTable").hide();
 	send("placeMeeple", value);
+}
+
+function toggleMenu(){
+		$("#nav-icon3").toggleClass('open');
+		console.log("menu");
+		if($("#menu").is(":visible")){
+			$("#menu").slideUp(200);
+		}else{
+			$("#menu").slideDown(200);
+		}
 }
 //--------------------------------------------Test-------------------------------------
 function test(){
@@ -158,7 +175,7 @@ function test(){
 		testStart();
 		
 	}
-	
+	toggleMenu();
 
 }
 
@@ -168,6 +185,7 @@ function divFunction(number){
 }
 
 function testTile(type){
+	toggleMenu();
 	var message = {
       intent: "tile",
 	  value: type,
@@ -178,30 +196,33 @@ function testTile(type){
 	handleInput(message);
 }
 function testPlaceMeeple(){
+toggleMenu();
 	var message = {
       intent: "placedTile",
 	  value: "1_1_1_1_1",
-	  value2: 1,
+	  value2: 0,
 	  sender: "host",
 	  playerNumber: 1
     };
 	handleInput(message);
 }
 function testPlaceMeeple2(){
+toggleMenu();
 	var message = {
       intent: "placedTile",
 	  value: "1_0_1_0_0",
-	  value2: 1,
+	  value2: 0,
 	  sender: "host",
 	  playerNumber: 1
     };
 	handleInput(message);
 }
 function testDone(){
+toggleMenu();
 	var message = {
       intent: "turnDone",
 	  value: "",
-	  value2: 1,
+	  value2: 0,
 	  sender: "host",
 	  playerNumber: 1
     };
@@ -209,6 +230,7 @@ function testDone(){
 }
 
 function testStart(){
+toggleMenu();
 	var message = {
       intent: "starting",
 	  value: 1,
@@ -219,6 +241,7 @@ function testStart(){
 	handleInput(message);
 }
 function testNew(){
+toggleMenu();
 	var message = {
       intent: "newQ",
 	  value: 1,
@@ -229,6 +252,7 @@ function testNew(){
 	handleInput(message);
 }
 function testFunction(){
+toggleMenu();
 	var message = {
       intent: "loginFree",
 	  value: 1,
@@ -239,6 +263,7 @@ function testFunction(){
 	handleInput(message);
 }
 function testFunction2(){
+toggleMenu();
 	var message = {
       intent: "loginTaken",
 	  value: 1,
@@ -249,6 +274,7 @@ function testFunction2(){
 	handleInput(message);
 }
 function testCorrect(){
+toggleMenu();
 	var message = {
       intent: "score",
 	  value: 1,
@@ -260,6 +286,7 @@ function testCorrect(){
 }
 
 function testFunction3(){
+toggleMenu();
 	var message = {
       intent: "score",
 	  value: 1,
@@ -270,6 +297,7 @@ function testFunction3(){
 	handleInput(message);
 }
 function testFunction4(){
+toggleMenu();
 	var message = {
       intent: "newQ",
 	  value: 1,

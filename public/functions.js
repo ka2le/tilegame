@@ -5,7 +5,7 @@ var playerTurn = 0;
 var numberOfPlayers = 0;
 var teamColors = ["blue", "red", "yellow", "green", "black"];
 
-
+var allTilesTypes = [];
 var totalNumberOfRounds = 72;
 var playerMovement = [0,0]
 var playerPos = [100,100]
@@ -96,11 +96,17 @@ function player(number, active){
 	players.push(this);
 }
 function createTheTiles(){
-/* 	var newTile;
-newTile = new tile(1, "road", "grass","road", "grass", "none",10);
-newTile = new tile(1, "road", "grass","road", "grass", "none",10);
-newTile = new tile(2, "road", "town", "road", "grass", "none",5); */
-var newTile;
+var testSomeTiles = false;
+if(testSomeTiles){
+		var newTile;
+	newTile = new tile(1, "road", "grass","road", "grass", "none",10);
+	newTile = new tile(3, "road", "grass","grass", "road", "none",5);
+	newTile = new tile(2, "road", "town", "road", "grass", "none",5); 
+	newTile = new tile(4, "road", "grass", "road", "road", "block",4);
+	newTile = new tile(5, "town", "town",  "grass", "grass", "none",2);
+	newTile = new tile(6, "grass", "town",  "road", "road", "none",2);
+}else{
+ var newTile;
 
 	for(var i = 0; i<9; i++){
 		newTile = new tile(1, "road", "grass","road", "grass", "none",10);
@@ -158,8 +164,9 @@ var newTile;
 	}
 	for(var i = 0; i<3; i++){
 		newTile = new tile(19, "road", "town",  "grass", "road", "none",1); 	
-	} 
+	}  
 	//console.log(allTiles);
+	}
 }
 function tile(type, left, top,right, bottom, center, numberOfThisType){
 	this.type= type;
@@ -170,13 +177,14 @@ function tile(type, left, top,right, bottom, center, numberOfThisType){
 	this.borders = [left, top, right, bottom, center];
 	this.center= center;
 	this.id= allTiles.length;
-	allTiles.push(this);	
+	allTiles.push(this);
+	allTilesTypes.push(this);
 }
 
 function getTileByType(type){
-	for(var i= 0; i<allTiles.length; i++){
-		if(allTiles[i].type==type){
-			return allTiles[i];
+	for(var i= 0; i<allTilesTypes.length; i++){
+		if(allTilesTypes[i].type==type){
+			return allTilesTypes[i];
 		}
 	}
 }
@@ -203,6 +211,7 @@ function rotateBorders(borders, theRotation){
 	return(tempArray);
 }
 function placeTile(){
+	console.log("Placeing Tile" + activeSquare.borders);
 	var theActive = activeSquare;
 	var updateSquare = findXY(activeSquare.valueX, activeSquare.valueY);
 	if(updateSquare.type==0){
@@ -212,7 +221,7 @@ function placeTile(){
 		var bottomTile=  findXY(activeSquare.valueX, activeSquare.valueY+1);
 		var completeMatch = true;
 		var thisBordes = getBorders(activeSquare);
-	//	console.log("this borders: "+thisBordes);
+		console.log("this borders: "+thisBordes);
 		if(leftTile.type>0 || rightTile.type>0 || topTile.type>0 || bottomTile.type>0){
 			if(leftTile.type>0){
 				var currentBorders = getBorders(leftTile);
@@ -1160,7 +1169,7 @@ function clearConsole(){
 $(function() {
 	   $(window).keydown(function(e) {
 		var key = e.which;
-		console.log("key pressed: "+key); //do stuff with "key" here...
+	//	console.log("key pressed: "+key); //do stuff with "key" here...
 
 	   if(!activeSquare.disabled){
 		
