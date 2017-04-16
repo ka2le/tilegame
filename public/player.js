@@ -158,6 +158,7 @@ function place(){
 	send("place");
 }
 function reroll(){
+	toggleMenu();
 	send("reroll");
 }
 function placeMeeple(value){
