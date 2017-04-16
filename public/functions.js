@@ -36,11 +36,9 @@ function onload(){
 	console.log("start");
 	startConnection();
 	theCanvas = document.getElementById("theCanvas");
-	pixelHeight = $('#theCanvas').height()/4*3;
-	pixelWidth = $('#theCanvas').width()/4*3;
+	updateCanvasSize();
 //console.log(pixelHeight);
-	theCanvas.height = pixelHeight;
-	theCanvas.width = pixelWidth;
+
 	var margin = gridSize/4;
 	for(var x= 0; x<gridSize; x++){
 		var xpos= x*squareSize-(margin*squareSize);
@@ -67,9 +65,20 @@ function onload(){
 	var testArray = [1,2,3,4];
 	//console.log(rotateBorders(testArray,2));
 	resetPlayers();
+	$(window).resize(function () {
+		updateCanvasSize();
+	});
 	//console.log("players");
 	//console.log(players);
 	//createTransparentMeeple();
+}
+function updateCanvasSize(){
+//	console.log("updateCanvasSize");
+	theCanvas = document.getElementById("theCanvas");
+	pixelHeight = $('#theCanvas').height()/4*3;
+	pixelWidth = $('#theCanvas').width()/4*3;
+	theCanvas.height = pixelHeight;
+	theCanvas.width = pixelWidth;
 }
 function continueOnload(){
 	console.log("continueOnload does nothing now on host.");
@@ -390,12 +399,14 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
 		drawRotateToTemp(this.imageOriginal.src, rotation);
 		this.setImg(getTempSrc());
 		this.rotate = rotation;
+		borderColor = "black";
 		//this.imageOriginal = this.image;
 		//this.active = true;
     };
 	this.rotateLeft = function () {
 		rotation = ((rotation+2)%4)+1;
 	//	console.log("rotateRight"+ rotation);
+		borderColor = "black";
 		drawRotateToTemp(this.imageOriginal.src, rotation);
 		this.setImg(getTempSrc());
 		this.rotate = rotation;
@@ -1149,6 +1160,7 @@ function handleInput(data){
 
 //-------------------------------------------------Handle Input------------------------------------------------------------------------
 function moveTile(direction){
+	borderColor = "black";
 	var theActive = activeSquare;
 	var newSquare;
 	if(direction=="up"){
@@ -1167,6 +1179,7 @@ function moveTile(direction){
 	newSquare.activate();
 }
 function startPlayerTurn(player){
+	borderColor = "black";
 	send("tile", activeSquare.type, player);
 
 }
