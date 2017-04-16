@@ -977,16 +977,6 @@ function countScore(){
 	}
 }
 
-/* for(var squareNumber = 0; squareNumber<theConnectedSquares.length; squareNumber++){
-						var theSquare = theConnectedSquares[squareNumber];
-						if(theSquare.borders[theSquare.meeplePos]==thisConnection.type){
-							
-							//theSquare.meeplePos = -1;
-							//var whatPlayer = teamColors.indexOf(theSquare.meepleColor);
-							//console.log("returning meeple to player "+ whatPlayer);
-							//players[whatPlayer].meeplesLeft++;
-						}
-					} */
 function clearPlayerPotentialScore(){
 	for(var player = 0; player<players.length; player++){
 		players[player].potentialScore = 0;
@@ -1133,6 +1123,9 @@ function handleInput(data){
 	}
 	if(intent=="place"){
 		placeTile();
+	}
+	if(intent=="reroll"){
+		drawNewTile();
 	}
 	if(intent=="rotate"){
 		var direction = data.value;

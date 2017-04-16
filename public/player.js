@@ -152,6 +152,9 @@ function place(){
 	//$("#tileTable").hide();
 	send("place");
 }
+function reroll(){
+	send("reroll");
+}
 function placeMeeple(value){
 	//$("#meepleTable").hide();
 	send("placeMeeple", value);
