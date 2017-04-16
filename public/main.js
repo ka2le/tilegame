@@ -10,11 +10,13 @@ function startConnection(){
 	};
 	socket.onclose = function () {
 		  console.log("Socket Was Closed For Some Reason");
-		  reconnect();
+		  reconnect(2);
 	};
 }
-function reconnect(){
-	socket.close();
+function reconnect(number){
+	if(number!=2){
+		socket.close();
+	}
 	socket = new WebSocket( 'wss://' + window.location.host );  
 	socket.addEventListener( 'message', doSocketMessage );
 	socket.onopen = function () {
