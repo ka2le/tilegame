@@ -38,11 +38,12 @@ body,html {
 	display:none;
 }
 #inputContainer table{
-	padding: 2vh;	
+	padding: 1vh;	
+	//padding-top:0px;
 }
 #inputContainer td{
 
-	padding-bottom: 4vh;
+	padding-bottom: 1vh;
 }
 
 
@@ -78,12 +79,25 @@ height:7vh !important;
 	width:12vw;
 	}
 .placeButton{
-	width: 40vw !important;;
+	width: 40vw !important;
 	height:14vh !important;
 }
+
+.arrowdown, .arrowup{
+	width:30vw  !important;
+}
+.arrowleft, .arrowright{
+	height:30vw  !important;
+	
+}
+
+
 #player1Stuff{
 	display:none;
 }
+
+
+
 .bigbutton{
 	//border: 3px solid;
 	//border-color: rgb(172,157,222);
@@ -199,7 +213,7 @@ label{
  margin-top:10vh;
 }
 #player #top{
-	 min-height:13vh;
+	 min-height:10vh;
 }
 .square label{
 	//color:green;
