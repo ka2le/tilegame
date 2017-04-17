@@ -169,13 +169,13 @@ newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
 	for(var i = 0; i<4; i++){
 		newTile = new tile(4, "road", "grass", "road", "road", "block",4);
 	}
-	for(var i = 0; i<5; i++){
+	for(var i = 0; i<3; i++){
 		newTile = new tile(5, "town", "town",  "grass", "grass", "none",2);
 	}
 	for(var i = 0; i<3; i++){
 		newTile = new tile(6, "grass", "town",  "road", "road", "none",2);
 	}
-	for(var i = 0; i<4; i++){
+	for(var i = 0; i<3; i++){
 		newTile = new tile(7, "town", "town",  "town", "grass", "none",2);
 	}
 	for(var i = 0; i<5; i++){
@@ -200,20 +200,35 @@ newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
 		newTile = new tile(14, "road", "road",  "road", "road", "block",3);
 	}
 	for(var i = 0; i<1; i++){
-		newTile = new tile(15, "town", "town",  "town", "town", "none",1); 
+		newTile = new tile(15, "town", "town",  "town", "town", "none",1, true); 
 	}
-	for(var i = 0; i<3; i++){
-		newTile = new tile(16, "town", "grass",  "town", "grass", "none",1); 
+	for(var i = 0; i<2; i++){
+		newTile = new tile(16, "town", "grass",  "town", "grass", "none",1, true); 
 	}
-	for(var i = 0; i<3; i++){
-		newTile = new tile(17, "town", "town",  "town", "road", "none",1); 
+	for(var i = 0; i<2; i++){
+		newTile = new tile(17, "town", "town",  "town", "road", "none",1, true); 
 	}
-	for(var i = 0; i<4; i++){
-		newTile = new tile(18, "town", "town",  "road", "road", "none",1); 
+	for(var i = 0; i<2; i++){
+		newTile = new tile(18, "town", "town",  "road", "road", "none",1,true); 
 	}
 	for(var i = 0; i<3; i++){
 		newTile = new tile(19, "road", "town",  "grass", "road", "none",1); 	
-	}  
+	} 
+	for(var i = 0; i<2; i++){
+		newTile = new tile(20, "town", "town",  "grass", "grass", "none",2, true);
+	}
+	for(var i = 0; i<1; i++){
+		newTile = new tile(21, "town", "town",  "town", "grass", "none",2, true);
+	}
+	for(var i = 0; i<1; i++){
+		newTile = new tile(22, "town", "grass",  "town", "grass", "none",1); 
+	}
+	for(var i = 0; i<2; i++){
+		newTile = new tile(23, "town", "town",  "road", "road", "none",1); 
+	}	
+	for(var i = 0; i<1; i++){
+		newTile = new tile(24, "town", "town",  "town", "road", "none",1); 
+	}
 	//console.log(allTiles);
 	}
 }
