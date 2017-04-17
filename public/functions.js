@@ -5,8 +5,8 @@ var playerTurn = 0;
 var numberOfPlayers = 0;
 var teamColors = ["blue", "red", "yellow", "green", "black"];
 
-var startX = 20;
-var startY = 20;
+var startX = 15;
+var startY = 15;
 var allTilesTypes = [];
 var totalNumberOfRounds = 72;
 var playerMovement = [0,0]
@@ -21,7 +21,7 @@ var fallspeed = 3;
 var offsetX =0;
 var offsetY =0;
 var player1;
-var gridSize=40;
+var gridSize=30;
 var margin = gridSize/4;
 var squareSize = 120;
 var zoomSpeed = 5; 
@@ -35,6 +35,7 @@ var activeSquareImg = new Image();
 var TO_RADIANS = Math.PI/2;
 var allTiles = []; 
 var borderColor = "black";
+var drawDelay = 50;
 function onload(){
 	//console.log("start");
 	startConnection();
@@ -55,7 +56,6 @@ function onload(){
 		}
 		theSquares.push(column);
 	}
-	
 	var x = startX;
 	var y = startY;
 	xpos= x*squareSize-(margin*squareSize);
@@ -615,7 +615,10 @@ function draw() {
 	 }
 
 	  ctx.save();
-	window.requestAnimationFrame(draw);
+	 setTimeout(function(){ 
+		window.requestAnimationFrame(draw);
+	 }, drawDelay); 
+	
 }
 function drawRotateToTemp(src, rotate){
 	//console.log("draw rotate "+rotate);
@@ -901,6 +904,7 @@ function removeMeeplesFromSquares(theSquares){
 	//console.log(theSquares);
 	for(var i = 0; i<theSquares.length; i++){
 		var whatPlayer = teamColors.indexOf(theSquares[i].meepleColor);
+		console.log("returning "+teamColors[whatPlayer] +" meeple from sqaure id: "+ theSquares[i].id);
 		players[whatPlayer].meeplesLeft++;
 		theSquares[i].meeplePos =-1;
 	}
@@ -1087,8 +1091,8 @@ function centerTiles(){
 	var ywidth = ymax-ymin;
 	var canvasWidth = Math.floor(pixelWidth/squareSize);
 	var canvasHeight = Math.floor(pixelHeight/squareSize);
-	var leftSpace = Math.floor((canvasWidth-xwidth)/2);
-	var topSpace = Math.floor((canvasHeight-ywidth)/2);
+	var leftSpace = Math.ceil((canvasWidth-xwidth)/2);
+	var topSpace = Math.ceil((canvasHeight-ywidth)/2);
 	offsetX =(margin*squareSize)-(xmin*squareSize)+(leftSpace*squareSize);
 	offsetY =(margin*squareSize)-(ymin*squareSize)+(topSpace*squareSize);
 	/* if(leftSpace<4){

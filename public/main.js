@@ -30,7 +30,7 @@ function reconnect(){
 }
 function send(intent, value, value2){
 	if(window.location.host=="localhost:4330" || window.location.host=="localhost"){
-		console.log("sending diabled beacause Localhost. Message:"+ intent+" value: "+value);
+	//	console.log("sending diabled beacause Localhost. Message:"+ intent+" value: "+value);
 	}else{
 		var message = {
 		intent: intent,
