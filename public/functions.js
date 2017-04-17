@@ -5,8 +5,8 @@ var playerTurn = 0;
 var numberOfPlayers = 0;
 var teamColors = ["blue", "red", "yellow", "green", "black"];
 
-var startX = 16;
-var startY = 12;
+var startX = 20;
+var startY = 20;
 var allTilesTypes = [];
 var totalNumberOfRounds = 72;
 var playerMovement = [0,0]
@@ -18,12 +18,13 @@ var stepLenght = 7;
 var keyisup = true;
 var allObjects = [];
 var fallspeed = 3;
-var offsetX =10;
-var offsetY =10;
+var offsetX =0;
+var offsetY =0;
 var player1;
-var gridSize=30;
-var squareSize = 70;
-var zoomSpeed = 20; 
+var gridSize=40;
+var margin = gridSize/4;
+var squareSize = 120;
+var zoomSpeed = 5; 
 var theCanvas;
 var pixelWidth = 1200;
 var pixelHeight = 800;
@@ -35,13 +36,14 @@ var TO_RADIANS = Math.PI/2;
 var allTiles = []; 
 var borderColor = "black";
 function onload(){
-	console.log("start");
+	//console.log("start");
 	startConnection();
 	theCanvas = document.getElementById("theCanvas");
 	updateCanvasSize();
 //console.log(pixelHeight);
-
-	var margin = gridSize/4;
+	document.getElementById("tempCanvas").height = squareSize;
+	document.getElementById("tempCanvas").width = squareSize;
+	//var margin = gridSize/4;
 	for(var x= 0; x<gridSize; x++){
 		var xpos= x*squareSize-(margin*squareSize);
 		var column = [];
@@ -62,8 +64,9 @@ function onload(){
 	//updateTemp();
 	init();
 	createTheTiles();
-	console.log(allTiles);
-	allObjects[400].updateType(2);
+	//console.log(allTiles);
+	findXY(startX,startY-1).updateType(2);
+	//allObjects[400]
 	//createCanvases();
 	var testArray = [1,2,3,4];
 	//console.log(rotateBorders(testArray,2));
@@ -71,20 +74,22 @@ function onload(){
 	$(window).resize(function () {
 		updateCanvasSize();
 	});
+	centerTiles();
 	//console.log("players");
 	//console.log(players);
 	//createTransparentMeeple();
 }
 function updateCanvasSize(){
-//	console.log("updateCanvasSize");
+	//console.log("updateCanvasSize");
 	theCanvas = document.getElementById("theCanvas");
 	pixelHeight = $('#theCanvas').height()/4*3;
 	pixelWidth = $('#theCanvas').width()/4*3;
 	theCanvas.height = pixelHeight;
 	theCanvas.width = pixelWidth;
+	centerTiles();
 }
 function continueOnload(){
-	console.log("continueOnload does nothing now on host.");
+	//console.log("continueOnload does nothing now on host.");
 	send("hostLoaded");
 }
 function resetPlayers(){
@@ -108,52 +113,20 @@ function player(number, active){
 	players.push(this);
 }
 function createTheTiles(){
-var testSomeTiles = false;
+var testSomeTiles = true;
 if(testSomeTiles){
 	var newTile;
 	newTile = new tile(1, "road", "grass","road", "grass", "none",10);
 	newTile = new tile(2, "road", "town", "road", "grass", "none",5);
-	newTile = new tile(10, "grass", "town",  "grass", "town", "block",1);
-	newTile = new tile(10, "grass", "town",  "grass", "town", "block",1);
-	newTile = new tile(12, "road", "town",  "road", "road", "block",1);
-	newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
-newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);	
-
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
-	
+	for(var i = 0; i<20; i++){
+		newTile = new tile(1, "road", "grass","road", "grass", "none",10);
+	}
+	for(var i = 0; i<20; i++){
+		newTile = new tile(6, "grass", "town",  "road", "road", "none",2);
+	}
+	for(var i = 0; i<30; i++){
+		newTile = new tile(13, "grass", "grass",  "grass", "road", "church",3);
+	}
 }else{
  var newTile;
 
@@ -279,7 +252,7 @@ function rotateBorders(borders, theRotation){
 	return(tempArray);
 }
 function placeTile(){
-	console.log("Placeing Tile" + activeSquare.borders);
+	//console.log("Placeing Tile" + activeSquare.borders);
 	var theActive = activeSquare;
 	var updateSquare = findXY(activeSquare.valueX, activeSquare.valueY);
 	if(updateSquare.type==0){
@@ -289,58 +262,58 @@ function placeTile(){
 		var bottomTile=  findXY(activeSquare.valueX, activeSquare.valueY+1);
 		var completeMatch = true;
 		var thisBordes = getBorders(activeSquare);
-		console.log("this borders: "+thisBordes);
+		//console.log("this borders: "+thisBordes);
 		if(leftTile.type>0 || rightTile.type>0 || topTile.type>0 || bottomTile.type>0){
 			if(leftTile.type>0){
 				var currentBorders = getBorders(leftTile);
 				
 				if(currentBorders[2]!=thisBordes[0]){
 					completeMatch=false;
-				//	console.log(currentBorders[2]+"<LEFT MISMATCH current>"+thisBordes[0]);
+					//console.log(currentBorders[2]+"<LEFT MISMATCH current>"+thisBordes[0]);
 				}else{
-				//	console.log(currentBorders[2]+"<LEFT Match current>"+thisBordes[0]);
+					//console.log(currentBorders[2]+"<LEFT Match current>"+thisBordes[0]);
 				}
 			}
 			if(rightTile.type>0){
 				var currentBorders = getBorders(rightTile);
 				if(currentBorders[0]!=thisBordes[2]){
 					completeMatch=false;
-				//	console.log(currentBorders[0]+"<RIGHT MISMATCH current>"+thisBordes[2]);
+					//console.log(currentBorders[0]+"<RIGHT MISMATCH current>"+thisBordes[2]);
 				}else{
-				//	console.log(currentBorders[0]+"<RIGHT MATCH current>"+thisBordes[2]);
+					//console.log(currentBorders[0]+"<RIGHT MATCH current>"+thisBordes[2]);
 				}
 			}
 			if(topTile.type>0){
 				var currentBorders = getBorders(topTile);
 				if(currentBorders[3]!=thisBordes[1]){
 					completeMatch=false;
-				//	console.log(currentBorders[3]+"<TOP MISMATCH current>"+thisBordes[1]);
+					//console.log(currentBorders[3]+"<TOP MISMATCH current>"+thisBordes[1]);
 				}else{
-				//	console.log(currentBorders[3]+"<TOP MATCH current>"+thisBordes[1]);
+					//console.log(currentBorders[3]+"<TOP MATCH current>"+thisBordes[1]);
 				}
 			}
 			if(bottomTile.type>0){
 				var currentBorders = getBorders(bottomTile);
 				if(currentBorders[1]!=thisBordes[3]){
 					completeMatch=false;
-				//	console.log(currentBorders[1]+"<Bottom  MISMATCH current>"+thisBordes[3]);
+					//console.log(currentBorders[1]+"<Bottom  MISMATCH current>"+thisBordes[3]);
 				}else{
-				//	console.log(currentBorders[1]+"<Bottom  MAtCH current>"+thisBordes[3]);
+					//console.log(currentBorders[1]+"<Bottom  MAtCH current>"+thisBordes[3]);
 				}
 			}
 			if(completeMatch){
 				updateSquare.updateType(1);
 				waitForMeeple();
 			}else{
-			//	console.log("does not match");
+				//console.log("does not match");
 				cantPlaceTile();
 			}
 		}else{
-		//	console.log("must place next to other square");
+			//console.log("must place next to other square");
 			cantPlaceTile();
 		}
 	}else{
-	//	console.log("square taken");
+		//console.log("square taken");
 		cantPlaceTile();
 	}
 }
@@ -369,7 +342,7 @@ function help(){
 }
 function cantPlaceTile(){
 	borderColor="red";
-//	console.log("cantPlaceTile");
+	//console.log("cantPlaceTile");
 }
 function getTileIdByType(type){
 	for(var i= 0; i<allTiles.length; i++){
@@ -438,8 +411,8 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
 			this.rotate = rotation;
 			this.borders = getBorders(this, this.rotate);
 			this.imageOriginal = this.image;
-			console.log("getTileIdByType(this.type)");
-			console.log(getTileIdByType(this.type));
+			//console.log("getTileIdByType(this.type)");
+			//console.log(getTileIdByType(this.type));
 			currentTileId = getTileIdByType(this.type);
 			allTiles.splice(currentTileId,1);
 		}
@@ -458,7 +431,7 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
 			var tileType = allTiles[randomNumber-1].type;
 			this.setImg("img/tile"+tileType+".png");
 			activeSquare.valueX = startX;
-			activeSquare.valueY = startY;
+			activeSquare.valueY = startY-1;
 			moveTile("down");
 			activeSquareImg.src=("img/tile"+tileType+".png");
 			this.rotate=1;
@@ -469,7 +442,7 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
     };
 	this.rotateRight = function () {
 		rotation = (rotation%4)+1;
-	//	console.log("rotateRight"+ rotation);
+		//console.log("rotateRight"+ rotation);
 		drawRotateToTemp(this.imageOriginal.src, rotation);
 		this.setImg(getTempSrc());
 		this.rotate = rotation;
@@ -479,7 +452,7 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
     };
 	this.rotateLeft = function () {
 		rotation = ((rotation+2)%4)+1;
-	//	console.log("rotateRight"+ rotation);
+		//console.log("rotateRight"+ rotation);
 		borderColor = "black";
 		drawRotateToTemp(this.imageOriginal.src, rotation);
 		this.setImg(getTempSrc());
@@ -513,7 +486,7 @@ function findActive(){
 	}
 }
 function placeMeeple(position){
-//	console.log("placeMeeple");
+	//console.log("placeMeeple");
 	var teamColor = teamColors[playerTurn];
 	var tileToPlaceOn = findXY(activeSquare.valueX,activeSquare.valueY);
 	tileToPlaceOn.meeplePos = position-1;
@@ -634,11 +607,11 @@ function draw() {
 			 ctx.clearRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height); // clear canvas
 		  ctx.fillStyle = borderColor;
 		  ctx.fillRect(activeSquare.x+offsetX, activeSquare.y+offsetY, activeSquare.width, activeSquare.height);
-		  ctx.clearRect(theObject.x+offsetX+5, theObject.y+offsetY+5, theObject.width-10, theObject.height-10); // clear canvas
+		  ctx.clearRect(theObject.x+offsetX+10, theObject.y+offsetY+10, theObject.width-20, theObject.height-20); // clear canvas
 		  theObject = activeSquare;
 		  updateTemp();
 		  var tempCanvas = document.getElementById("tempCanvas");
-		ctx.drawImage(tempCanvas, theObject.x+offsetX+5, theObject.y+offsetY+5, theObject.width-10, theObject.height-10);
+		ctx.drawImage(tempCanvas, theObject.x+offsetX+10, theObject.y+offsetY+10, theObject.width-20, theObject.height-20);
 	 }
 
 	  ctx.save();
@@ -699,7 +672,7 @@ function newRound(){
 			send("tile", activeSquare.type, playerTurn);
 		}
 		
-	}, 300);
+	}, 1);
 }
 function endGame(){
 	townValue = 1;
@@ -823,7 +796,7 @@ function findConnectedSquares(startSquare){
 									connectedSquares.push(connectedSquare);
 								}		
 								squaresToCheck.push(connectedSquare);
-							//	console.log(connectedSquare.borders);
+								//console.log(connectedSquare.borders);
 								addedNewSquare=true;
 							}else{
 								foundUnfinished = true;
@@ -836,7 +809,7 @@ function findConnectedSquares(startSquare){
 				
 				//console.log("special center");
 				//console.log(currentSquare.id);
-			//	console.log(currentSquare.borders[i] +" <border at pos> "+i);
+				//console.log(currentSquare.borders[i] +" <border at pos> "+i);
 				 if(currentSquare.borders[i]==terrain){
 					if(currentSquare.meeplePos==i){
 						isTaken =true;
@@ -908,12 +881,12 @@ function testScore(){
 	var connectedSquares =resultArray[0];
 	var isComplete = !resultArray[1];
 	var isTaken = resultArray[2];
-//	console.log("This terrain is complete "+ isComplete);
-//	console.log("This terrain is taken "+ isTaken);
-//	console.log(connectedSquares);
+	//console.log("This terrain is complete "+ isComplete);
+	//console.log("This terrain is taken "+ isTaken);
+	//console.log(connectedSquares);
 	for(var j = 0; j<connectedSquares.length; j++){
-			console.log(connectedSquares[j].borders);
-			console.log(connectedSquares[j].id);
+			//console.log(connectedSquares[j].borders);
+			//console.log(connectedSquares[j].id);
 		}
 
 }
@@ -924,8 +897,8 @@ function resetAllTempValues(){
 	}
 }
 function removeMeeplesFromSquares(theSquares){
-	console.log("removeMeeplesFromSquares");
-	console.log(theSquares);
+	//console.log("removeMeeplesFromSquares");
+	//console.log(theSquares);
 	for(var i = 0; i<theSquares.length; i++){
 		var whatPlayer = teamColors.indexOf(theSquares[i].meepleColor);
 		players[whatPlayer].meeplesLeft++;
@@ -992,12 +965,12 @@ function countScore(){
 			}
 		}
 	}
-//	console.log("Calculating the score-----------------------------");
+	//console.log("Calculating the score-----------------------------");
 	clearPlayerPotentialScore();
 	
 	for(var i = 0; i<theConnections.length; i++){
 		var thisConnection = theConnections[i];
-	//	console.log(thisConnection.name);
+		//console.log(thisConnection.name);
 		//console.log(thisConnection);
 		var maxNumberOfMeeples = 0;
 		var newMeeplesByPlayers = [0,0,0,0,0];
@@ -1021,11 +994,11 @@ function countScore(){
 			scoreMultiplier=townValue;
 		}
 		if(thisConnection.type=="church"){
-		//	console.log("CALCULATING SCORE FOR CHURCH");
+			//console.log("CALCULATING SCORE FOR CHURCH");
 			scoreMultiplier=1;
 			//console.log("theConnections.triggeredColor "+thisConnection.triggeredColor+" gives player nr :");
 			//console.log(teamColors);
-		//	console.log(thisConnection.triggeredColor +"<theConnections.triggeredColor  theConnections.meeplePlayer>"+thisConnection.meeplePlayer)
+			//console.log(thisConnection.triggeredColor +"<theConnections.triggeredColor  theConnections.meeplePlayer>"+thisConnection.meeplePlayer)
 			var playerI = thisConnection.meeplePlayer;//teamColors.indexOf(thisConnection.triggeredColor,1);
 			//console.log(playerI);
 			
@@ -1048,7 +1021,7 @@ function countScore(){
 			scoreMultiplier = scoreMultiplier*numberOfTiles;
 			if(thisConnection.type=="town"){
 				var howMany = howManyWithShield(thisConnection.connectedSquares);
-				console.log("howManyWithShield: "+howMany);
+				//console.log("howManyWithShield: "+howMany);
 				scoreMultiplier += townValue*howMany;
 			}
 				//console.log("scoreMultiplier "+scoreMultiplier);
@@ -1083,22 +1056,68 @@ function clearPlayerPotentialScore(){
 }
 
 var placeableSpotsString;
+function centerTiles(){
+	var xmax = 0;
+	var ymax = 0;
+	var xmin = gridSize;
+	var ymin = gridSize;
+	for(var i = 0; i<allObjects.length; i++){
+		if(allObjects[i].type>0){
+			//console.log(allObjects[i]);
+			var currentx = allObjects[i].valueX;
+			var currenty = allObjects[i].valueY;
+			if(currentx>xmax){
+				xmax= currentx;
+			}
+			if(currentx<xmin){
+				xmin= currentx;
+			}
+			if(currenty>ymax){
+				ymax= currenty;
+			}
+			if(currenty<ymin){
+				ymin= currenty;
+			}
+		}
+		
+	}
+	//console.log(xmin+"<xmin xmax> "+xmax);
+	//console.log(ymin+"<ymin ymax> "+ymax);
+	var xwidth = xmax-xmin;
+	var ywidth = ymax-ymin;
+	var canvasWidth = Math.floor(pixelWidth/squareSize);
+	var canvasHeight = Math.floor(pixelHeight/squareSize);
+	var leftSpace = Math.floor((canvasWidth-xwidth)/2);
+	var topSpace = Math.floor((canvasHeight-ywidth)/2);
+	offsetX =(margin*squareSize)-(xmin*squareSize)+(leftSpace*squareSize);
+	offsetY =(margin*squareSize)-(ymin*squareSize)+(topSpace*squareSize);
+	/* if(leftSpace<4){
+		var tempStepLenght = stepLenght;
+		stepLenght = squareSize*4;
+		zoomOut();
+		stepLenght= tempStepLenght;
+	}  */
+	//console.log("xwidth "+xwidth);
+	//console.log("ywidth "+ywidth);
+	
+}
 function waitForMeeple(){
-//	console.log("waitForMeeple");
+	//console.log("waitForMeeple");
 	theTurn = "waitForMeeple";
+	//centerTiles();
 	var startSquare = findXY(activeSquare.valueX, activeSquare.valueY);
 	var placeableSpots = [];
 	for(var i = 0; i<4; i++){
 		placeableSpots.push(0);
 		if(startSquare.borders[i]=="road" || startSquare.borders[i]=="town"){
-			console.log("Looking at "+startSquare.borders[i]+ "at "+i);
+			//console.log("Looking at "+startSquare.borders[i]+ "at "+i);
 			startSquare.tempMeeple = i;
 			var resultArray =  findConnectedSquares(startSquare);
 			var connectedSquares =resultArray[0];
 			var isComplete = !resultArray[1];
 			var isTaken = resultArray[2];
-			console.log("It is taken?: " +isTaken);
-			console.log(resultArray);
+			//console.log("It is taken?: " +isTaken);
+			//console.log(resultArray);
 			if(!isTaken){
 				placeableSpots[i] = 1;
 			}
@@ -1111,7 +1130,7 @@ function waitForMeeple(){
 	}
 	
 	placeableSpotsString = placeableSpots.join("_");
-	console.log("placeableSpots: "+ placeableSpots);
+	//console.log("placeableSpots: "+ placeableSpots);
 	if(players[playerTurn].meeplesLeft>0){
 		send("placedTile", placeableSpotsString, playerTurn);
 		activeSquare.disabled = true;
@@ -1123,7 +1142,7 @@ function waitForMeeple(){
 }
 function drawNewTile(){
 	updatePlayerInfo();
-//	console.log(" drawNewTile()");
+	//console.log(" drawNewTile()");
 	activeSquare.disabled = false;
 	activeSquare.updateType("randomTile");
 	updateTemp();
@@ -1147,13 +1166,13 @@ function restartGame(howManyPlayers){
 	}
 	allTiles = [];
 	createTheTiles();
-	allObjects[492].updateType(2);
+	findXY(startX,startY-1).updateType(2);
 	var x = startX;
 	var y = startY;
 	xpos= x*squareSize-(margin*squareSize);
 	ypos= y*squareSize-(margin*squareSize);
 	activeSquare = new object("square", squareSize, squareSize,xpos,ypos,x,y, "img/tile1.png", 1, "rgb(255,0,0)","rgb(0,0,0)",1);
-//	console.log(activeSquare);
+	//console.log(activeSquare);
 	activeSquare.updateType("randomTile");
 	//updateTemp();
 	init();
@@ -1180,11 +1199,11 @@ function handleReconnect(){
 	}
 }
 function handleInput(data){
-	console.log(" handleInput(data)");
-	console.log(data);
+	//console.log(" handleInput(data)");
+	//console.log(data);
 	
 	var intent = data.intent;
-	console.log(intent);
+	//console.log(intent);
 	if(intent=="reconnect" || intent=="iAmReady"){
 		if((data.playerNumber) == playerTurn){
 			if(theTurn=="newRound"){
@@ -1280,6 +1299,7 @@ function zoomIn(){
 	stepLenght = (stepLenght/zoomSpeed)*(zoomSpeed-1);
 	theCanvas.height = pixelHeight;
 	theCanvas.width = pixelWidth;
+	centerTiles();
 }
 function zoomOut(){
 	pixelHeight = (pixelHeight/zoomSpeed)*(zoomSpeed+1);
@@ -1287,15 +1307,16 @@ function zoomOut(){
 	stepLenght = (stepLenght/zoomSpeed)*(zoomSpeed+1);
 	theCanvas.height = pixelHeight;
 	theCanvas.width = pixelWidth;
+	centerTiles();
 
 }
 function clearConsole(){
-	console.clear();
+	//console.clear();
 }
 $(function() {
 	   $(window).keydown(function(e) {
 		var key = e.which;
-		console.log("key pressed: "+key); //do stuff with "key" here...
+		//console.log("key pressed: "+key); //do stuff with "key" here...
 //restartGame(howManyPlayers);
 	   if(!activeSquare.disabled){
 		
@@ -1331,7 +1352,7 @@ $(function() {
 		   if(key == 69){
 				var theActive = activeSquare;
 				theActive.rotateRight();
-			//	console.log("rotated to: " +theActive.rotate);
+				//console.log("rotated to: " +theActive.rotate);
 				//newSquare.activate();
 		  }
 		     // R for reload
@@ -1406,7 +1427,7 @@ $(function() {
 
 
 function testNoMeeple(meeple){
-//	console.log("testNoMeeple");
+	//console.log("testNoMeeple");
 	var message = {
       intent: "placeMeeple",
 	  value: meeple,
@@ -1427,7 +1448,7 @@ function createTransparentMeeple(){
 	canvas.height = squareSize;
 	document.getElementById("testButtons").appendChild(canvas);
 	var ctx = canvas.getContext('2d');
-	console.log("createTransparentMeeple v2");
+	//console.log("createTransparentMeeple v2");
 	ctx.drawImage(meepleImg, 0, 0, squareSize,squareSize);
 	ctx.save();
 	var image = ctx.getImageData(0, 0, squareSize, squareSize);
@@ -1435,7 +1456,7 @@ function createTransparentMeeple(){
 		length = imageData.length;
 		// imageData[i-2], imageData[i-3]
 	for(var i=3; i < length; i+=4){
-		console.log(imageData[i-1])
+		//console.log(imageData[i-1])
 		if(imageData[i-1] == 0){
 			imageData[i] = 0;
 		}  
@@ -1452,7 +1473,7 @@ function createTransparentMeeple(){
 	for(var i= 1; i<allTiles.length+1; i++){
 		//createSquare = new object("square", squareSize, squareSize,0,0,0,00, "img/tile"+i+".png", 1, "rgb(255,0,0)","rgb(0,0,0)",1);
 		var src = "img/tile"+i+".png";
-		console.log(src);
+		//console.log(src);
 		for(var j= 1; j<5; j++){
 			var rotate = j;
 			container.innerHTML += '<canvas height="'+squareSize+'px" width="'+squareSize+'px" id="canvas'+i+'_'+j+'"></canvas>'
@@ -1462,8 +1483,8 @@ function createTransparentMeeple(){
 	}
 }
 function drawRotated(src, rotate, canvas){
-	console.log("drawing " +src + " with rotation " +rotate+ " on canvas "+canvas.id  )
-	console.log(canvas);
+	//console.log("drawing " +src + " with rotation " +rotate+ " on canvas "+canvas.id  )
+	//console.log(canvas);
 	var ctx = canvas.getContext('2d');
 	ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, squareSize, squareSize); // clear canvas
@@ -1485,6 +1506,6 @@ function drawRotated(src, rotate, canvas){
 		value2: "test2"
 		},
 	function( data ) {
-		console.log(data);
+		//console.log(data);
 		
 	}); */
