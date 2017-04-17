@@ -108,13 +108,50 @@ function player(number, active){
 function createTheTiles(){
 var testSomeTiles = false;
 if(testSomeTiles){
-		var newTile;
+	var newTile;
 	newTile = new tile(1, "road", "grass","road", "grass", "none",10);
-	newTile = new tile(3, "road", "grass","grass", "road", "none",5);
-	newTile = new tile(2, "road", "town", "road", "grass", "none",5); 
-	newTile = new tile(4, "road", "grass", "road", "road", "block",4);
-	newTile = new tile(5, "town", "town",  "grass", "grass", "none",2);
-	newTile = new tile(6, "grass", "town",  "road", "road", "none",2);
+	newTile = new tile(2, "road", "town", "road", "grass", "none",5);
+	newTile = new tile(10, "grass", "town",  "grass", "town", "block",1);
+	newTile = new tile(10, "grass", "town",  "grass", "town", "block",1);
+	newTile = new tile(12, "road", "town",  "road", "road", "block",1);
+	newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);
+newTile = new tile(17, "town", "town",  "town", "road", "none",1, true);	
+
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+newTile = new tile(8, "grass", "town",  "grass", "grass", "none",3);
+	
 }else{
  var newTile;
 
@@ -146,7 +183,7 @@ if(testSomeTiles){
 		newTile = new tile(9, "grass", "grass",  "grass", "grass", "church",1);
 	}
 	for(var i = 0; i<3; i++){
-		newTile = new tile(10, "grass", "town",  "grass", "town", "grass",1);
+		newTile = new tile(10, "grass", "town",  "grass", "town", "block",1);
 	}
 	for(var i = 0; i<2; i++){
 		newTile = new tile(11, "town", "town",  "grass", "grass", "block",1);
@@ -178,7 +215,7 @@ if(testSomeTiles){
 	//console.log(allTiles);
 	}
 }
-function tile(type, left, top,right, bottom, center, numberOfThisType){
+function tile(type, left, top,right, bottom, center, numberOfThisType, hasShield){
 	this.type= type;
 	this.left= left;
 	this.right= right;
@@ -186,6 +223,10 @@ function tile(type, left, top,right, bottom, center, numberOfThisType){
 	this.bottom= bottom;
 	this.borders = [left, top, right, bottom, center];
 	this.center= center;
+	this.hasShield = false;
+	if(hasShield){
+		this.hasShield = true;
+	}
 	this.id= allTiles.length;
 	allTiles.push(this);
 	allTilesTypes.push(this);
@@ -757,6 +798,7 @@ function findConnectedSquares(startSquare){
 						
 						}else{
 							if(connectedSquare.type>0){
+								connectedSquare.tempMeeple = exitToEntrance(i);
 								if(connectedSquares.indexOf(connectedSquare)==-1){
 									connectedSquares.push(connectedSquare);
 								}		
@@ -870,7 +912,15 @@ function removeMeeplesFromSquares(theSquares){
 		theSquares[i].meeplePos =-1;
 	}
 }
-
+function howManyWithShield(theSquares){
+	var howMany =0;
+	for(var i = 0; i<theSquares.length; i++){
+		if(getTileByType(theSquares[i].type).hasShield){
+			howMany++;
+		}
+	}
+	return howMany;
+}
 function countScore(){
 	var theConnections = [];
 	for(var i = 0; i<allObjects.length; i++){
@@ -976,7 +1026,12 @@ function countScore(){
 		}else{
 			var numberOfTiles = thisConnection.connectedSquares.length;
 			scoreMultiplier = scoreMultiplier*numberOfTiles;
-			//console.log("scoreMultiplier "+scoreMultiplier);
+			if(thisConnection.type=="town"){
+				var howMany = howManyWithShield(thisConnection.connectedSquares);
+				console.log("howManyWithShield: "+howMany);
+				scoreMultiplier += townValue*howMany;
+			}
+				//console.log("scoreMultiplier "+scoreMultiplier);
 			if(thisConnection.isComplete){
 				removeMeeplesFromSquares(thisConnection.squaresWithRelatedMeeples);
 				for(var player = 0; player<newMeeplesByPlayers.length; player++){
@@ -1016,11 +1071,14 @@ function waitForMeeple(){
 	for(var i = 0; i<4; i++){
 		placeableSpots.push(0);
 		if(startSquare.borders[i]=="road" || startSquare.borders[i]=="town"){
+			console.log("Looking at "+startSquare.borders[i]+ "at "+i);
 			startSquare.tempMeeple = i;
 			var resultArray =  findConnectedSquares(startSquare);
 			var connectedSquares =resultArray[0];
 			var isComplete = !resultArray[1];
 			var isTaken = resultArray[2];
+			console.log("It is taken?: " +isTaken);
+			console.log(resultArray);
 			if(!isTaken){
 				placeableSpots[i] = 1;
 			}
@@ -1033,7 +1091,7 @@ function waitForMeeple(){
 	}
 	
 	placeableSpotsString = placeableSpots.join("_");
-	//console.log("placeableSpots: "+ placeableSpots);
+	console.log("placeableSpots: "+ placeableSpots);
 	if(players[playerTurn].meeplesLeft>0){
 		send("placedTile", placeableSpotsString, playerTurn);
 		activeSquare.disabled = true;

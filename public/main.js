@@ -2,7 +2,7 @@ var socket = null;
 
 function startConnection(){
 	// WebSocket
-	if(window.location.host=="localhost:4330"){
+	if(window.location.host=="localhost:4330" || window.location.host=="localhost"){
 		console.log("WebSocket is not used on localhost");
 	}else{
 		socket = new WebSocket( 'wss://' + window.location.host );  
@@ -29,7 +29,7 @@ function reconnect(){
 	};
 }
 function send(intent, value, value2){
-	if(window.location.host=="localhost:4330"){
+	if(window.location.host=="localhost:4330" || window.location.host=="localhost"){
 		console.log("sending diabled beacause Localhost. Message:"+ intent+" value: "+value);
 	}else{
 		var message = {
