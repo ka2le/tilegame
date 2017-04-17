@@ -1149,6 +1149,7 @@ function drawNewTile(){
 	//console.log(" drawNewTile()");
 	activeSquare.disabled = false;
 	activeSquare.updateType("randomTile");
+	send("tile", activeSquare.type, playerTurn);
 	updateTemp();
 }
 function restartGame(howManyPlayers){
