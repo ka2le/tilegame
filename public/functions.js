@@ -5,6 +5,8 @@ var playerTurn = 0;
 var numberOfPlayers = 0;
 var teamColors = ["blue", "red", "yellow", "green", "black"];
 
+var startX = 16;
+var startY = 12;
 var allTilesTypes = [];
 var totalNumberOfRounds = 72;
 var playerMovement = [0,0]
@@ -52,8 +54,8 @@ function onload(){
 		theSquares.push(column);
 	}
 	
-	var x = 13;
-	var y = 11;
+	var x = startX;
+	var y = startY;
 	xpos= x*squareSize-(margin*squareSize);
 	ypos= y*squareSize-(margin*squareSize);
 	activeSquare = new object("square", squareSize, squareSize,xpos,ypos,x,y, "img/tile1.png", 1, "rgb(255,0,0)","rgb(0,0,0)",1);
@@ -440,6 +442,9 @@ function object(name, width, height, pixelX, pixelY,valueX,valueY, src, type, co
 			var randomNumber = Math.floor(Math.random() * numberOfTiles) + 1;
 			var tileType = allTiles[randomNumber-1].type;
 			this.setImg("img/tile"+tileType+".png");
+			activeSquare.valueX = startX;
+			activeSquare.valueY = startY;
+			moveTile("down");
 			activeSquareImg.src=("img/tile"+tileType+".png");
 			this.rotate=1;
 			rotation=1;
@@ -1128,8 +1133,8 @@ function restartGame(howManyPlayers){
 	allTiles = [];
 	createTheTiles();
 	allObjects[492].updateType(2);
-	var x = 15;
-	var y = 12;
+	var x = startX;
+	var y = startY;
 	xpos= x*squareSize-(margin*squareSize);
 	ypos= y*squareSize-(margin*squareSize);
 	activeSquare = new object("square", squareSize, squareSize,xpos,ypos,x,y, "img/tile1.png", 1, "rgb(255,0,0)","rgb(0,0,0)",1);
@@ -1275,8 +1280,8 @@ function clearConsole(){
 $(function() {
 	   $(window).keydown(function(e) {
 		var key = e.which;
-	//	console.log("key pressed: "+key); //do stuff with "key" here...
-
+		console.log("key pressed: "+key); //do stuff with "key" here...
+//restartGame(howManyPlayers);
 	   if(!activeSquare.disabled){
 		
 			borderColor = "black";
@@ -1290,6 +1295,10 @@ $(function() {
 		   // down arrow
 		   if(key == 40){
 				moveTile("down");
+		  }
+		  //key = N
+		   if(key == 78){
+				restartGame(2);
 		  }
 		   // left arrow
 		   if(key == 37){
