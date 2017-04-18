@@ -1189,6 +1189,7 @@ function restartGame(howManyPlayers){
 	numberOfPlayers=howManyPlayers;
 	updatePlayerInfo();
 	playerTurn=0;
+	theTurn="newRound"
 	allObjects = [];
 	var margin = gridSize/4;
 	for(var x= 0; x<gridSize; x++){
@@ -1221,6 +1222,7 @@ function restartGame(howManyPlayers){
 	updateGameInfo("");
 	updateGameInfo("Started game for "+ numberOfPlayers+ " players!");
 }
+
 function updateGameInfo(text){
 	if(text == ""){
 		text = allTiles.length+"/"+totalNumberOfRounds+" Tiles Left";
