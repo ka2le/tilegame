@@ -160,7 +160,7 @@ function player(number, active){
 	players.push(this);
 }
 function createTheTiles(){
-var testSomeTiles = true;
+var testSomeTiles = false;
 if(testSomeTiles){
 	var newTile;
 	newTile = new tile(1, "road", "grass","road", "grass", "none",10);
