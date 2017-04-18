@@ -86,26 +86,29 @@ body{
 	background-color:rgb(30,30,30);
 	position:absolute;
 	width:30vw;
-	left: 35vw;
-	top:10vh;
-	height:70vh;
+	left: 30vw;
+	top:5vh;
+	min-height:70vh;
 	z-index:27;
 	border-radius:2vh;
 	text-align:center;
 	color:white;
-	padding-top: 5vh;
-	padding-left: 5vw;
-	padding-right: 5vw;
+	min-width:400px;
+//	padding-top: 5vh;
+	//padding-left: 5vw;
+	//padding-right: 5vw;
+	padding:5vh;
 	font-size:1.5em;
-	
+	//overflow:auto;
 }
-#menuContainer input{
+#menuContainer input, #menuContainer a{
 	color:white;
 	font-size:1.2em;
 	background-color:rgba(0,0,0,0);
 	margin-top:0.5vh;
 	margin-bottom:0.5vh;
 	border: none;
+	text-decoration: none;
 }
 .line{
 	height:2px;
