@@ -36,6 +36,7 @@ var TO_RADIANS = Math.PI/2;
 var allTiles = []; 
 var borderColor = "black";
 var drawDelay = 50;
+var cheatsOn = false;
 function onload(){
 	//console.log("start");
 	startConnection();
@@ -82,7 +83,36 @@ function onload(){
 		event.stopPropagation();
 		// Do something
 	});
+	$("#cheatsCheck").click(function() {
+        if($(this).is(":checked")){
+			enableCheats()
+		}else{
+			disableCheats();
+		}
+    });
+	$('.scoreText').change(function() { 
+		insertCheatScore();
+	});	
 	//$("#menuContainer").onclick().stopPropagation();
+}
+function insertCheatScore(){
+	console.log("insertCheatScore()");
+	for(var i =0; i<players.length; i++){
+		$("#player"+(i+1)).addClass("playerInfo");
+		if(players[i].active){
+			players[i].score =document.getElementById("scoreTextPlayer"+(i+1)).value;
+			players[i].potentialScore = document.getElementById("potentialTextPlayer"+(i+1)).value;
+			players[i].meeplesLeft =document.getElementById("meeplePlayer"+(i+1)).value;
+		}
+	}
+}
+function enableCheats(){
+	cheatsOn = true;
+	$(".scoreText").prop('readonly', false);
+}
+function disableCheats(){
+	cheatsOn = false;
+	$(".scoreText").prop('readonly', true);
 }
 function toggleMenu(){
 	console.log("toggleMenu");
@@ -515,21 +545,17 @@ function placeMeeple(position){
 	
 }
 function updatePlayerInfo(){
-	//console.log("updatePlayerInfo");
 	$(".playerInfo").hide();
-	//console.log(playerTurn);
 	$(".playerInfo").removeClass();
 	$("#player"+(playerTurn+1)).addClass("activePlayer"+(playerTurn+1));
 	for(var i =0; i<players.length; i++){
 		$("#player"+(i+1)).addClass("playerInfo");
 		if(players[i].active){
-			//$("#player"+1).addClass("activePlayer"+1);
 			document.getElementById("player"+(i+1)).style.display = "block";
-			document.getElementById("scorePlayer"+(i+1)).innerHTML = players[i].score+" Points";
-			document.getElementById("potentialPlayer"+(i+1)).innerHTML = players[i].potentialScore+" Potential Points";
-			document.getElementById("meeplePlayer"+(i+1)).innerHTML = players[i].meeplesLeft+" Meeples";
+			document.getElementById("scoreTextPlayer"+(i+1)).value = players[i].score;
+			document.getElementById("potentialTextPlayer"+(i+1)).value = players[i].potentialScore;
+			document.getElementById("meeplePlayer"+(i+1)).value = players[i].meeplesLeft;
 		}
-		
 	}
 }
 function findXY(x,y){

@@ -31,7 +31,14 @@ body{
 }
 .playerInfo h1{
 	font-size:1em;
-
+}
+.scoreText{
+	background-color:rgba(0,0,0,0);
+	//font-size:2em;
+	border:none;
+	font-size:1em;
+	width:30px;
+	
 }
 #player1, #player2, #player3, #player4{
 	display:none;
@@ -119,6 +126,7 @@ body{
 	padding:5vh;
 	font-size:1.5em;
 	//overflow:auto;
+	//font-weight: bold;
 }
 #menuContainer input, #menuContainer a{
 	color:white;
@@ -126,8 +134,18 @@ body{
 	background-color:rgba(0,0,0,0);
 	margin-top:0.5vh;
 	margin-bottom:0.5vh;
+	
 	border: none;
 	text-decoration: none;
+}
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  padding: 10px;
 }
 .line{
 	height:2px;
