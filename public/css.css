@@ -30,14 +30,13 @@ body{
 	//box-shadow: 10px 14px 44px -5px rgba(0,0,0,0.35);
 }
 .playerInfo h1{
-	font-size:1em;
 }
 .scoreText{
 	background-color:rgba(0,0,0,0);
 	//font-size:2em;
 	border:none;
 	font-size:1em;
-	width:30px;
+	width:70px;
 	
 }
 #player1, #player2, #player3, #player4{
@@ -176,6 +175,17 @@ input[type=checkbox]
 	bottom:2vh;
 	text-align:center;
 	color:black;
+	
+}
+#info2{
+	position:absolute;
+	z-index:21;
+	width:100vw;
+	font-size:3em;
+	top:2vh;
+	text-align:center;
+	color:black;
+	display:none;
 }
 
 #testButtons{

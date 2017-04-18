@@ -710,6 +710,7 @@ var theTurn = "";
 var townValue = 2;
 function newRound(){
 	//console.log("newRound");
+	$("#info2").hide();
 	countScore();
 	updateGameInfo("");
 	updatePlayerInfo();
@@ -1139,6 +1140,7 @@ function centerTiles(){
 function waitForMeeple(){
 	//console.log("waitForMeeple");
 	theTurn = "waitForMeeple";
+	$("#info2").show();
 	//centerTiles();
 	var startSquare = findXY(activeSquare.valueX, activeSquare.valueY);
 	var placeableSpots = [];
