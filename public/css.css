@@ -27,6 +27,7 @@ body{
 	//display:none !important;
 	font-size:2em;
 	border-radius: 10px;
+	//box-shadow: 10px 14px 44px -5px rgba(0,0,0,0.35);
 }
 .playerInfo h1{
 	font-size:1em;
@@ -38,15 +39,33 @@ body{
 #player1{
 		top:130px;
 	left: 5px;
-	background-color:rgba(200,200,255,0.5);
+	background-color:rgba(200,200,255,0.4);
 }
 #player1 h1{
  color:blue;
 }
+.activePlayer1, .activePlayer2, .activePlayer3, .activePlayer4 {
+	font-size:2.2em;
+	box-shadow: 10px 14px 44px -5px rgba(0,0,0,0.75);
+	
+}
+.activePlayer1{
+	background-color:rgba(150,150,255,0.6) !important;
+}
+.activePlayer2{
+		background-color:rgba(255,100,100,0.6) !important;
+}
+.activePlayer3{
+	background-color:rgba(215,215,20,0.45) !important;
+}
+.activePlayer4{
+	background-color:rgba(100,225,100,0.5) !important;
+}
+
 #player2{
 		top:130px;
 	right: 5px;
-	background-color:rgba(255,200,200,0.5);
+	background-color:rgba(255,200,200,0.4);
 }
 #player2 h1{
  color:red;
@@ -54,7 +73,7 @@ body{
 #player3{
 		top:500px;
 	left: 5px;
-	background-color:rgba(215,215,20,0.3);
+	background-color:rgba(215,215,20,0.25);
 }
 #player3 h1{
  color:rgb(165, 165, 8);

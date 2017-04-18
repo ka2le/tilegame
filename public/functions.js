@@ -130,7 +130,7 @@ function player(number, active){
 	players.push(this);
 }
 function createTheTiles(){
-var testSomeTiles = false;
+var testSomeTiles = true;
 if(testSomeTiles){
 	var newTile;
 	newTile = new tile(1, "road", "grass","road", "grass", "none",10);
@@ -138,8 +138,11 @@ if(testSomeTiles){
 	for(var i = 0; i<20; i++){
 		newTile = new tile(1, "road", "grass","road", "grass", "none",10);
 	}
-	for(var i = 0; i<15; i++){
+	for(var i = 0; i<10; i++){
 		newTile = new tile(13, "grass", "grass",  "grass", "road", "church",3);
+	}
+	for(var i = 0; i<15; i++){
+		newTile = new tile(4, "road", "grass", "road", "road", "block",4);
 	}
 }else{
  var newTile;
@@ -512,9 +515,15 @@ function placeMeeple(position){
 	
 }
 function updatePlayerInfo(){
+	//console.log("updatePlayerInfo");
 	$(".playerInfo").hide();
+	//console.log(playerTurn);
+	$(".playerInfo").removeClass();
+	$("#player"+(playerTurn+1)).addClass("activePlayer"+(playerTurn+1));
 	for(var i =0; i<players.length; i++){
+		$("#player"+(i+1)).addClass("playerInfo");
 		if(players[i].active){
+			//$("#player"+1).addClass("activePlayer"+1);
 			document.getElementById("player"+(i+1)).style.display = "block";
 			document.getElementById("scorePlayer"+(i+1)).innerHTML = players[i].score+" Points";
 			document.getElementById("potentialPlayer"+(i+1)).innerHTML = players[i].potentialScore+" Potential Points";
@@ -677,6 +686,7 @@ function newRound(){
 	//console.log("newRound");
 	countScore();
 	updateGameInfo("");
+	updatePlayerInfo();
 	send("turnDone", "scoreHereLater", playerTurn);
 	playerTurn++;
 	if(playerTurn>numberOfPlayers-1){
@@ -974,19 +984,28 @@ function countScore(){
 	
 	for(var i = 0; i<theConnections.length; i++){
 		var thisConnection = theConnections[i];
+	//	console.log("Calculating the score-----------------------------"+thisConnection.name);
 		//console.log(thisConnection.name);
 		//console.log(thisConnection);
 		var maxNumberOfMeeples = 0;
 		var newMeeplesByPlayers = [0,0,0,0,0];
 		for(var player = 0; player<thisConnection.meeplesByPlayers.length; player++){
 			var nrOfMeeples = thisConnection.meeplesByPlayers[player];
+			//console.log(player+" has "+nrOfMeeples+" meeples");
+			//console.log(" maxNumberOfMeeples "+maxNumberOfMeeples);
 			if(nrOfMeeples>maxNumberOfMeeples){
-				maxNumberOfMeeples=nrOfMeeples;
-				newMeeplesByPlayers = [0,0,0,0,0];	
-			}else{
 				
+				maxNumberOfMeeples=nrOfMeeples;
+				//console.log("maxNumberOfMeeples updated to "+maxNumberOfMeeples+"-----");
+				newMeeplesByPlayers = [0,0,0,0,0];	
+				newMeeplesByPlayers[player] += nrOfMeeples;
+				
+			}else if(nrOfMeeples==maxNumberOfMeeples){
+				newMeeplesByPlayers[player] += nrOfMeeples;
+			}else{
+				newMeeplesByPlayers[player] = 0;
 			}
-			newMeeplesByPlayers[player] += nrOfMeeples;
+			
 		}
 		//console.log("who should get score");
 		//console.log(newMeeplesByPlayers);
@@ -998,37 +1017,24 @@ function countScore(){
 			scoreMultiplier=townValue;
 		}
 		if(thisConnection.type=="church"){
-			//console.log("CALCULATING SCORE FOR CHURCH");
 			scoreMultiplier=1;
-			//console.log("theConnections.triggeredColor "+thisConnection.triggeredColor+" gives player nr :");
-			//console.log(teamColors);
-			//console.log(thisConnection.triggeredColor +"<theConnections.triggeredColor  theConnections.meeplePlayer>"+thisConnection.meeplePlayer)
-			var playerI = thisConnection.meeplePlayer;//teamColors.indexOf(thisConnection.triggeredColor,1);
-			//console.log(playerI);
-			
+			var playerI = thisConnection.meeplePlayer;//teamColors.indexOf(thisConnection.triggeredColor,1);	
 			var numberOfTiles = thisConnection.connectedSquares.length;
-			//console.log("numberOfTiles "+numberOfTiles);
 			var idFromName = thisConnection.name.split("_")[2];
-			//console.log("idFromName "+idFromName);
 			if(thisConnection.isComplete){
-				//console.log("Church Completed")
 				players[playerI].score += numberOfTiles*scoreMultiplier;
 				players[playerI].meeplesLeft++;
 				thisConnection.startSquare.meeplePos = -1;				
 			}else{
 				players[playerI].potentialScore += numberOfTiles*scoreMultiplier;
-				//console.log(allObjects[idFromName].id);
 			}
-			//console.log(allObjects[idFromName]);
 		}else{
 			var numberOfTiles = thisConnection.connectedSquares.length;
 			scoreMultiplier = scoreMultiplier*numberOfTiles;
 			if(thisConnection.type=="town"){
 				var howMany = howManyWithShield(thisConnection.connectedSquares);
-				//console.log("howManyWithShield: "+howMany);
 				scoreMultiplier += townValue*howMany;
 			}
-				//console.log("scoreMultiplier "+scoreMultiplier);
 			if(thisConnection.isComplete){
 				removeMeeplesFromSquares(thisConnection.squaresWithRelatedMeeples);
 				for(var player = 0; player<newMeeplesByPlayers.length; player++){
@@ -1037,6 +1043,7 @@ function countScore(){
 						nrOfMeeples=1;
 					}
 					players[player].score += nrOfMeeples*scoreMultiplier;
+					console.log("giving score "+ nrOfMeeples*scoreMultiplier +" to " + player)
 				}
 				
 			}else{
@@ -1154,7 +1161,7 @@ function drawNewTile(){
 function restartGame(howManyPlayers){
 	 hideMenu();
 	numberOfPlayers=howManyPlayers;
-	
+	updatePlayerInfo();
 	playerTurn=0;
 	allObjects = [];
 	var margin = gridSize/4;
