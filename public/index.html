@@ -13,6 +13,25 @@
  <link href="favicon.ico" rel="icon" type="image/png" />
 </head>
 <body onload="onload()">
+<div id="menuButton">
+<img onclick="toggleMenu()" src="img/settings.png"></img>
+</div>
+<div id="menubackground" onclick="toggleMenu()">
+	<div id="menuContainer">
+		<img id="closeButton" onclick="toggleMenu()" src="img/x.png">
+		<h1> Tile Game by KK</h1>
+		<p class="line"></p>
+		<input type="button" value="Start 2 Player Game" onclick="restartGame('2')"><br>
+		<input type="button" value="Start 3 Player Game" onclick="restartGame('3')"><br>
+		<input type="button" value="Start 4 Player Game" onclick="restartGame('4')"><br>
+		<br>
+		<p class="line"></p>
+		<input type="button" value="Draw New Tile" onclick="drawNewTile()">
+		<p class="line"></p>
+		<p>Player 1 can start the game from their menu.</p>
+		
+	</div>
+</div>
 <div id="testButtons">
 <input type="button" style="height: 5vh; font-size:2em;"onclick="startPlayerTurn('1')" value="start player 1 turn">
 <input type="button" style="height: 5vh; font-size:2em;"onclick="restartGame('2')" value="Restart 2 player game">

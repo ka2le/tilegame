@@ -78,6 +78,23 @@ function onload(){
 	//console.log("players");
 	//console.log(players);
 	//createTransparentMeeple();
+	$( "#menuContainer" ).click(function( event ) {
+		event.stopPropagation();
+		// Do something
+	});
+	//$("#menuContainer").onclick().stopPropagation();
+}
+function toggleMenu(){
+	console.log("toggleMenu");
+	if($("#menubackground").is(':visible')){
+		$("#menubackground").fadeOut("fast");
+	}else{
+		$("#menubackground").fadeIn("fast");
+	}
+	
+}
+function hideMenu(){
+	$("#menubackground").fadeOut("fast");
 }
 function updateCanvasSize(){
 	//console.log("updateCanvasSize");
@@ -495,7 +512,7 @@ function placeMeeple(position){
 	
 }
 function updatePlayerInfo(){
-	//$(".playerInfo").hide();
+	$(".playerInfo").hide();
 	for(var i =0; i<players.length; i++){
 		if(players[i].active){
 			document.getElementById("player"+(i+1)).style.display = "block";
@@ -1127,6 +1144,7 @@ function waitForMeeple(){
 }
 function drawNewTile(){
 	updatePlayerInfo();
+	hideMenu();
 	//console.log(" drawNewTile()");
 	activeSquare.disabled = false;
 	activeSquare.updateType("randomTile");
@@ -1134,6 +1152,7 @@ function drawNewTile(){
 	updateTemp();
 }
 function restartGame(howManyPlayers){
+	 hideMenu();
 	numberOfPlayers=howManyPlayers;
 	
 	playerTurn=0;
@@ -1175,6 +1194,8 @@ function updateGameInfo(text){
 	}
 	document.getElementById("info").innerHTML = text;
 }
+
+
 //-------------------------------------------------Handle Input------------------------------------------------------------------------
 function handleReconnect(){
 	if(theTurn=="newRound"){
