@@ -42,6 +42,10 @@ body{
 #player1, #player2, #player3, #player4{
 	display:none;
 }
+#player1 h1, #player2 h1, #player3 h1, #player4 h1{
+	 padding: 0px;
+ margin:0px;
+}
 #player1{
 		top:130px;
 	left: 5px;
@@ -49,6 +53,7 @@ body{
 }
 #player1 h1{
  color:blue;
+
 }
 .activePlayer1, .activePlayer2, .activePlayer3, .activePlayer4 {
 	font-size:2.2em;

@@ -100,9 +100,9 @@ function insertCheatScore(){
 	for(var i =0; i<players.length; i++){
 		$("#player"+(i+1)).addClass("playerInfo");
 		if(players[i].active){
-			players[i].score =document.getElementById("scoreTextPlayer"+(i+1)).value;
-			players[i].potentialScore = document.getElementById("potentialTextPlayer"+(i+1)).value;
-			players[i].meeplesLeft =document.getElementById("meeplePlayer"+(i+1)).value;
+			players[i].score = parseInt(document.getElementById("scoreTextPlayer"+(i+1)).value);
+			players[i].potentialScore = parseInt(document.getElementById("potentialTextPlayer"+(i+1)).value);
+			players[i].meeplesLeft = parseInt(document.getElementById("meeplePlayer"+(i+1)).value);
 		}
 	}
 }
@@ -165,15 +165,13 @@ if(testSomeTiles){
 	var newTile;
 	newTile = new tile(1, "road", "grass","road", "grass", "none",10);
 	newTile = new tile(2, "road", "town", "road", "grass", "none",5);
-	for(var i = 0; i<20; i++){
+	for(var i = 0; i<1; i++){
 		newTile = new tile(1, "road", "grass","road", "grass", "none",10);
 	}
-	for(var i = 0; i<10; i++){
+	for(var i = 0; i<1; i++){
 		newTile = new tile(13, "grass", "grass",  "grass", "road", "church",3);
 	}
-	for(var i = 0; i<15; i++){
-		newTile = new tile(4, "road", "grass", "road", "road", "block",4);
-	}
+
 }else{
  var newTile;
 
@@ -736,6 +734,7 @@ function endGame(){
 	var higestScore = 0;
 	var winners = [];
 	for(var i = 0; i<players.length; i++){
+		//players[i].active = false;
 		players[i].score += players[i].potentialScore;
 		players[i].potentialScore = 0;
 		players[i].meeplesLeft = 0;
@@ -745,15 +744,19 @@ function endGame(){
 		}
 		if(players[i].score>higestScore){
 			winners = [players[i]];
+			playerTurn = i;
+			//winners.i = i;
 			higestScore = players[i].score;
 		}
 	}
+	
 	updatePlayerInfo();
 	var text = "";
 	if(winners.length>1){
 		text += "Draw! Congratulations to:";
 		for(var i =0;i<winners.length; i++){
 			text += " "+winners[i].teamColor;
+			//players[winners.i].active = true;
 		}
 		text += "!";
 	}else{
