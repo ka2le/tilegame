@@ -127,11 +127,11 @@ function hideMenu(){
 }
 function updateCanvasSize(){
 	//console.log("updateCanvasSize");
-	theCanvas = document.getElementById("theCanvas");
+	/* theCanvas = document.getElementById("theCanvas");
 	pixelHeight = $('#theCanvas').height()/4*3;
 	pixelWidth = $('#theCanvas').width()/4*3;
 	theCanvas.height = pixelHeight;
-	theCanvas.width = pixelWidth;
+	theCanvas.width = pixelWidth; */
 	centerTiles();
 }
 function continueOnload(){
