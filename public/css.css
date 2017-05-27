@@ -3,6 +3,7 @@ body{
 	margin: 0px;
 	overflow:hidden;
 		font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+		background: rgb(241,251,255);
 }
 
 #canvasContainer{
@@ -198,6 +199,6 @@ input[type=checkbox]
 #testButtons{
 	position:absolute;
 	z-index:10;
-	display:none;
+	//display:none;
 
 }

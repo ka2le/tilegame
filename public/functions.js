@@ -4,7 +4,6 @@ var players = [];
 var playerTurn = 0;
 var numberOfPlayers = 0;
 var teamColors = ["blue", "red", "yellow", "green", "black"];
-
 var startX = 15;
 var startY = 15;
 var allTilesTypes = [];
